@@ -1,0 +1,34 @@
+nav {
+  background-color: rgb(32, 32, 60);
+  text-align: end;
+  display: flex;
+  align-items: center;
+  height: 6vw;
+}
+a {
+  color: #ff3131 !important;
+  text-decoration: none;
+  cursor: pointer;
+}
+a:hover {
+  color: #ff914d !important;
+}
+.logo {
+  width: 200px;
+  height: 200px !important;
+  float: left;
+}
+
+ul {
+  list-style: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: right; /* Para que los enlaces estén a la derecha */
+}
+
+li {
+  display: inline-block; /* Para que los enlaces estén en línea */
+  margin-left: 20px;
+  margin-right: 20px; /* Para separar los enlaces entre sí */
+}

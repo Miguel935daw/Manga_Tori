@@ -12,9 +12,9 @@ function App() {
   return (
     <main>
       <Routes>
-        <Route path="/Manga_Tori" element={<Home />}></Route>
-        <Route path="/Manga_Tori/Register" element={<Register />}></Route>
-        <Route path="/Manga_Tori/Login" element={<Login />} />
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/Register" element={<Register />}></Route>
+        <Route path="/Login" element={<Login />} />
       </Routes>
     </main>
   );
