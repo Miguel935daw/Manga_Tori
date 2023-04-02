@@ -9,7 +9,7 @@ function NavBar() {
   if (userSession !== null) {
     return (
       <nav>
-        <img src="/images/logo.png" alt="logo" className="logo" />
+        <img src="/images/logo.png" alt="logo" className="logo" onClick={() => navigate("/")}/>
         <ul>
           <li>
             <a onClick={() => supabase.auth.signOut()}>Cerrar Sesión</a>
@@ -22,7 +22,7 @@ function NavBar() {
   const navigate = useNavigate();
   return (
     <nav>
-      <img src="/images/logo.png" alt="logo" className="logo" />
+      <img src="/images/logo.png" alt="logo" className="logo" onClick={() => navigate("/")}/>
       <ul>
         <li>
           <a onClick={() => navigate("/Login")}>Iniciar Sesión</a>

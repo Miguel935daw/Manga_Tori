@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabase/client";
 import { useNavigate } from "react-router-dom";
-
+import NavBar from "./NavBar";
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -13,17 +13,18 @@ function Login() {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password,
-      })
+      });
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div >
-      <form onSubmit={handleSubmit} >
-        <h1 >Iniciar Sesión</h1>
-        <label htmlFor="email" >Correo Electrónico</label>
+    <div>
+      <NavBar />
+      <form onSubmit={handleSubmit}>
+        <h1>Iniciar Sesión</h1>
+        <label htmlFor="email">Correo Electrónico</label>
         <input
           type="email"
           name="email"
@@ -38,7 +39,13 @@ function Login() {
         />
         <button>Iniciar Sesión</button>
       </form>
-      <button onClick={()=> {navigate("/Register")}}>Registrarse</button>
+      <button
+        onClick={() => {
+          navigate("/Register");
+        }}
+      >
+        Registrarse
+      </button>
     </div>
   );
 }

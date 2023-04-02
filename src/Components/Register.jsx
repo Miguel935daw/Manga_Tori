@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../supabase/client";
 import { useNavigate } from "react-router-dom";
-
+import NavBar from "./NavBar";
 function comprobarContraseña(valor, campo) {
   //La contraseña debe tener mínimo 8 caracteres, una letra y un número
   let exp = /(?=\w*\d){1,}(?=\w*[a-zA-Z])\S{1,}/;
@@ -70,6 +70,7 @@ function Register() {
   };
   return (
     <div >
+      <NavBar/>
       {showConfirmation ? (
         <p >
           Se le ha enviado un correo de confirmación
