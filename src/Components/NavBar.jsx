@@ -24,6 +24,9 @@ function NavBar() {
     <nav>
       <img src="/images/logo.png" alt="logo" className="logo" onClick={() => navigate("/")}/>
       <ul>
+      <li>
+          <a onClick={() => navigate("/Biblioteca")}>Biblioteca</a>
+        </li>
         <li>
           <a onClick={() => navigate("/Login")}>Iniciar Sesión</a>
         </li>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Biblioteca from "./Components/Biblioteca";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Home from "./Components/Home";
@@ -7,7 +8,6 @@ import supabase from "./supabase/client";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <main>
@@ -15,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/Register" element={<Register />}></Route>
         <Route path="/Login" element={<Login />} />
+        <Route path="/Biblioteca" element={<Biblioteca />} />
       </Routes>
     </main>
   );

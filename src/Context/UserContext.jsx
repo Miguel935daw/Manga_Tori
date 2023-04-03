@@ -10,7 +10,7 @@ export function UserContextProvider({ children }) {
   useEffect(() => {
     const { data, error } = async () => await supabase.auth.getSession();
     setUserSession(data?.user ?? null);
-    //En caso de que cambie la sesión se redirije al usuario al inicio
+    //En caso de que cambie la sesión se redirige al usuario al inicio
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         setUserSession(session?.user ?? null);

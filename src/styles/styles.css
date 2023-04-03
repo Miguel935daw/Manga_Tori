@@ -33,3 +33,9 @@ li {
   margin-left: 20px;
   margin-right: 20px; /* Para separar los enlaces entre sí */
 }
+
+.manga{
+  width:200px;
+  height:300px;
+  cursor: pointer;
+}
