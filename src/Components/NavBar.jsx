@@ -5,12 +5,24 @@ import { UserContext, useAuth } from "../Context/UserContext";
 import "../styles/styles.css";
 
 function NavBar() {
-  const { userSession, getUserSubscription } = useAuth();
+  const { userSession, subscription } = useAuth();
+  const navigate = useNavigate();
   if (userSession !== null) {
+    console.log(subscription);
     return (
       <nav>
-        <img src="/images/logo.png" alt="logo" className="logo" onClick={() => navigate("/")}/>
+        <img
+          src="/images/logo.png"
+          alt="logo"
+          className="logo"
+          onClick={() => navigate("/")}
+        />
         <ul>
+          <>
+            <li>
+              <a onClick={() => navigate("/Biblioteca")}>Biblioteca</a>
+            </li>
+          </>
           <li>
             <a onClick={() => supabase.auth.signOut()}>Cerrar Sesión</a>
           </li>
@@ -19,12 +31,16 @@ function NavBar() {
     );
   }
 
-  const navigate = useNavigate();
   return (
     <nav>
-      <img src="/images/logo.png" alt="logo" className="logo" onClick={() => navigate("/")}/>
+      <img
+        src="/images/logo.png"
+        alt="logo"
+        className="logo"
+        onClick={() => navigate("/")}
+      />
       <ul>
-      <li>
+        <li>
           <a onClick={() => navigate("/Biblioteca")}>Biblioteca</a>
         </li>
         <li>

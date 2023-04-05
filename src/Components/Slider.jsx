@@ -14,7 +14,7 @@ function SliderComponent({ images }) {
     centerMode: true,
     variableWidth: true,
     autoplay: true,
-    autoplaySpeed: 3000
+    autoplaySpeed: 7000
   };
 
   return (

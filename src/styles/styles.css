@@ -39,3 +39,13 @@ li {
   height:300px;
   cursor: pointer;
 }
+
+.mangaList{
+  display: flex;
+  gap: 50px;
+}
+
+.section{
+  margin: 20px;
+  border: 2px solid black;
+}
