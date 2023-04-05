@@ -6,7 +6,8 @@ import Home from "./Components/Home";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import supabase from "./supabase/client";
 import "./App.css";
-
+import MangaSection from "./Components/MangaSection";
+import View from "./Components/View"
 function App() {
 
   return (
@@ -16,6 +17,8 @@ function App() {
         <Route path="/Register" element={<Register />}></Route>
         <Route path="/Login" element={<Login />} />
         <Route path="/Biblioteca" element={<Biblioteca />} />
+        <Route path="/Manga" element={<MangaSection />} />
+        <Route path="/Chapter" element={<View />} />
       </Routes>
     </main>
   );

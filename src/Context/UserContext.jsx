@@ -6,6 +6,7 @@ export const UserContext = createContext(null);
 
 export function UserContextProvider({ children }) {
   const [userSession, setUserSession] = useState(null);
+  const [userSubscription, setUserSubscription] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
     const { data, error } = async () => await supabase.auth.getSession();
@@ -14,32 +15,32 @@ export function UserContextProvider({ children }) {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         setUserSession(session?.user ?? null);
-          navigate("/");
+        setUserSubscription(false)
+        navigate("/");
       }
     );
-  }, []);
-  //Función que devuelve el valor del Campo Suscrito de la tabla usuarios
-  const getUserSubscription = async (userId) => {
-    const { data:Suscrito, error } = await supabase
-      .from("Usuarios")
-      .select("Suscrito")
-      .eq("User_ID", userId);
+    //Función para guardar el estado de la suscripción del usuario en el estado userSubscription
+    const getUserSubscription = async (userId) => {
+      const { data: Suscrito, error } = await supabase
+        .from("Usuarios")
+        .select("Suscrito")
+        .eq("User_ID", userId);
 
-    if (error) {
-      console.log(error);
-      return null;
-    }
-    
-  };
+      if (error) {
+        console.log(error);
+      } else {
+        setUserSubscription(Suscrito[0].Suscrito);
+      }
+    };
+  }, []);
 
   const value = {
     userSession,
-    getUserSubscription,
+    userSubscription,
   };
-  return (
-    <UserContext.Provider value={value}>{children}</UserContext.Provider>
-  );
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
+
 export function useAuth() {
   return useContext(UserContext);
 }

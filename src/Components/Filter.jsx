@@ -3,7 +3,7 @@ import { MangaContext, useManga } from "../Context/MangaContext";
 import supabase from "../supabase/client";
 
 function Filter() {
-  const { gender, changeGender, selectManga } = useManga();
+  const {changeGender} = useManga();
   const [genders, setGenders] = useState(null);
   useEffect(() => {
     async function fetchGenders() {

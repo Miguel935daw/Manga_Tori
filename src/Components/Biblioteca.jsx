@@ -4,11 +4,9 @@ import MangaList from "./MangaList";
 import Filter from "./Filter";
 function Biblioteca(){
     return <>
-        <NavBar />
-        <MangaContextProvider>
+        <NavBar />  
             <MangaList/>
             <Filter/>
-        </MangaContextProvider>
     </>
 }
 
