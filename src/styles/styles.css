@@ -1,5 +1,4 @@
 nav {
-  background-color: rgb(32, 32, 60);
   text-align: end;
   display: flex;
   align-items: center;
@@ -19,8 +18,18 @@ a:hover {
   float: left;
   cursor: pointer;
 }
-
+p {
+  font-size: 20px;
+ 
+}
+.title2 {
+  margin: 0px;
+  margin-bottom: 5px;
+}
 ul {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   list-style: none;
   width: 100%;
   margin: 0;
@@ -35,37 +44,272 @@ li {
 }
 
 .manga {
-  width: 200px;
-  height: 300px;
+  width: 15vw;
+  height: 20vw;
   cursor: pointer;
+  box-shadow: 0px 0px 20px 10px rgba(234, 46, 46, 0.38);
+  margin-left: 100px;
+  margin-right: 100px;
 }
 
 .mangaList {
   display: flex;
-  gap: 50px;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+}
+.mangas {
+  width: 85%;
 }
 
 .section {
-  margin: 20px;
-  border: 2px solid black;
+  display: flex;
+  flex-direction: row;
+  margin-top: 70px;
+  color: #ff3131;
 }
+
+.filter {
+  display: block; /* establece un contenedor flexible */
+  flex-wrap: wrap; /* permite que los elementos se envuelvan a la siguiente línea si no hay suficiente espacio */
+  justify-content: center; /* centra los elementos horizontalmente */
+  height: fit-content;
+  width: 15%;
+  border-radius: 0px 0px 0px 30px;
+  color: white;
+}
+
+.gender {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  height: fit-content;
+}
+.gender input {
+  margin-left: 33px;
+  margin-right: 9px;
+}
+label > input[type="radio"] {
+  display: none;
+}
+label > input[type="radio"] + span.Applight::before {
+  content: "";
+  display: inline-block;
+  vertical-align: bottom;
+  width: 1rem;
+  height: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 0.1rem;
+  border-color: rgb(255, 255, 255);
+}
+label > input[type="radio"]:checked + span.Applight {
+  color: rgb(255, 255, 255);
+}
+label > input[type="radio"]:checked + span.Applight::before {
+  background: radial-gradient(
+    rgb(255, 255, 255) 0%,
+    rgb(255, 255, 255) 40%,
+    transparent 50%,
+    transparent
+  );
+  border-color: rgb(255, 255, 255);
+}
+label > input[type="radio"] + span.Appdark::before {
+  content: "";
+  display: inline-block;
+  vertical-align: bottom;
+  width: 1rem;
+  height: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 0.1rem;
+  border-color: #ff3633;
+}
+label > input[type="radio"]:checked + span.Appdark {
+  color: #ff3633;
+}
+label > input[type="radio"]:checked + span.Appdark::before {
+  background: radial-gradient(
+    #ff3633 0%,
+    #ff3633 40%,
+    transparent 50%,
+    transparent
+  );
+  border-color: #ff3633;
+}
+
+/* basic layout */
+fieldset {
+  margin: 20px;
+  max-width: 400px;
+}
+label > input[type="radio"] + * {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+}
+
+span {
+  font-size: 20px;
+}
+
 .portadaInfo {
   width: 255px;
   height: 382.5px;
+  box-shadow: 0px 0px 20px 10px rgba(234, 46, 46, 0.38);
+  width: 15vw;
+  height: 20vw;
+  margin: 37px 52px 50.5px 50px;
 }
+
 .info {
   display: flex;
+  flex-direction: row;
   text-align: left;
+  font-size: 15px;
+  border-radius: 21px;
+  margin: 35px 55px 0px 55px;
 }
 
+.container {
+  justify-content: center;
+}
+
+.bar {
+  display: block;
+  width: 107px;
+  height: 5px;
+  background-color: #ff3633;
+  border-radius: 10px;
+}
 .mangaChapterList {
-  background-color: cornflowerblue;
-  color: white;
+  text-align: left;
+  color: #ff3633;
   cursor: pointer;
+  margin: 37px 52px 50.5px 50px;
 }
 
+.chapter {
+  display: flex;
+  border-radius: 21px;
+  height: 90px;
+  width: 411px;
+  align-items: center;
+  text-align: left;
+  justify-content: space-between;
+  margin-top: 5px;
+  color: #ff3131;
+}
+.chapterNumber{
+  margin-left: 17px;
+}
+.sinopsis{
+  width: 95%;
+  height: fit-content;
+  text-align: justify;
+}
+.view {
+  margin-right: 37px;
+}
 .page {
   width: 1000px;
   height: 1100px;
   margin: 20px;
+}
+
+/* Estilo base del toggle button */
+.toggle-button {
+  display: flex;
+  align-items: center;
+  align-self: flex-end;
+}
+.toggle-button input[type="checkbox"] {
+  display: none;
+}
+
+.toggle-button .slider {
+  background-color: #cccccc00;
+  border: 2px solid rgb(4, 4, 4);
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-block;
+  height: 20px;
+  position: relative;
+  width: 40px;
+  margin-left: 10px;
+}
+
+.toggle-button .slider:before {
+  background-color: rgb(0, 0, 0);
+  border-radius: 50%;
+  content: "";
+  height: 16px;
+  left: 2px;
+  position: absolute;
+  top: 2px;
+  transition: all 0.2s;
+  width: 16px;
+}
+
+/* Cambio de apariencia cuando está activado */
+.toggle-button input[type="checkbox"]:checked + .slider:before {
+  transform: translateX(20px);
+  background-color: rgb(255, 255, 255);
+}
+
+.toggle-button input[type="checkbox"]:checked + .slider {
+  background-color: #2195f300;
+  border: 2px solid rgb(255, 255, 255);
+}
+
+/*Modo Claro */
+nav.Applight {
+  background-color: white;
+}
+
+/*Modo Oscuro */
+nav.Appdark {
+  background-color: #2f2e5e;
+}
+
+div.Applight {
+  background-color: #f3f3f3;
+}
+div.Appdark {
+  background-color: #535282;
+}
+.mangaList.Applight {
+  background-color: #f3f3f3;
+}
+.mangaList.Appdark {
+  background-color: #535282;
+}
+
+.filter.Applight {
+  background: linear-gradient(90deg, #ff3131 0%, #ff914d 100%);
+}
+
+.filter.Appdark {
+  background: linear-gradient(90deg, #31257a 37.77%, #1b0461 100%);
+  color: #ff3633;
+}
+
+.chapter.Applight {
+  background-color: white;
+}
+.chapter.Appdark {
+  background-color: #2f2e5e;
+}
+
+.info.Applight {
+  background-color: white;
+  color: black;
+}
+.info.Appdark {
+  background-color: #2f2e5e;
+  color: white;
 }

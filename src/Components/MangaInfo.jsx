@@ -1,12 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import { useManga } from "../Context/MangaContext";
+import { useTheme } from "../Context/ThemeContext";
 
 function MangaInfo() {
   const { mangaSelected } = useManga();
-//   const [currentManga, setCurrentManga] = useState(null)
+  const { theme } = useTheme();
 
   if (!mangaSelected) {
-    console.log(mangaSelected)
+    console.log(mangaSelected);
     return (
       <>
         <p>Cargando...</p>
@@ -15,22 +16,21 @@ function MangaInfo() {
   } else {
     const state = mangaSelected.Estado == true ? "Finalizado" : "Publicándose";
     return (
-      <div className="info">
-        <div>
-          <img src={mangaSelected.Portada} alt="portada" className="portadaInfo"/>
-        </div>
-        <div>
-          <h1>{mangaSelected.Nombre}</h1>
-          <h2>Sinopsis</h2>
-          <p>{mangaSelected.Sinopsis}</p>
-          <h2>Género</h2>
-          <p>{mangaSelected.Género}</p>
-          <h2>Estado</h2>
-          <p>{state}</p>
-          <h2>Autor</h2>
-          <p>{mangaSelected.Autor}</p>
-          <h2>Editorial</h2>
-          <p>{mangaSelected.Editorial}</p>
+      <div className="container">
+        <div className={theme === "light" ? "info Applight" : "info Appdark"}>
+          <img
+            src={mangaSelected.Portada}
+            alt="portada"
+            className="portadaInfo"
+          />
+          <div>
+            <h1>{mangaSelected.Nombre}</h1>
+            <p className="sinopsis">{mangaSelected.Sinopsis}</p>
+            <h2>Género: {mangaSelected.Género}</h2>
+            <h2>Autor: {mangaSelected.Autor}</h2>
+            <h2>Editorial: {mangaSelected.Editorial}</h2>
+            <h2>Estado: {state}</h2>
+          </div>
         </div>
       </div>
     );

@@ -2,15 +2,18 @@ import { useEffect, useState, useContext } from "react";
 import supabase from "../supabase/client";
 import { useNavigate } from "react-router-dom";
 import { UserContext, useAuth } from "../Context/UserContext";
-import "../styles/styles.css";
 
+import { useTheme } from "../Context/ThemeContext";
+
+import "../styles/styles.css";
 function NavBar() {
   const { userSession, userSubscription } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const subcription = userSubscription == true ? "Suscriptor" : "No Suscriptor";
   if (userSession !== null) {
     return (
-      <nav>
+      <nav className={theme === "light" ? "App light" : "App dark"}>
         <img
           src="/images/logo.png"
           alt="logo"
@@ -33,7 +36,7 @@ function NavBar() {
   }
 
   return (
-    <nav>
+    <nav className={theme === "light" ? "Applight" : "Appdark"}>
       <img
         src="/images/logo.png"
         alt="logo"
@@ -41,6 +44,26 @@ function NavBar() {
         onClick={() => navigate("/")}
       />
       <ul>
+        <li htmlFor="toggle" className="toggle-button">
+          {theme === "light" ? (
+            <>
+              <img src="/images/DarkTheme.png" alt="Tema" id="icon" />
+              <input type="checkbox" id="toggle" />
+            </>
+          ) : (
+            <>
+              <img src="/images/LightTheme.png" alt="Tema" id="icon" />
+              <input type="checkbox" id="toggle" checked="true" />
+            </>
+          )}
+
+          <span
+            className="slider"
+            onClick={() => {
+              document.getElementById("toggle").click(), toggleTheme();
+            }}
+          ></span>
+        </li>
         <li>
           <a onClick={() => navigate("/Biblioteca")}>Biblioteca</a>
         </li>

@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { MangaContext, useManga } from "../Context/MangaContext";
 import supabase from "../supabase/client";
+import { useTheme } from "../Context/ThemeContext";
 
 function Filter() {
-  const {changeGender} = useManga();
+  const { changeGender } = useManga();
   const [genders, setGenders] = useState(null);
+  const { theme } = useTheme();
   useEffect(() => {
     async function fetchGenders() {
       const { data, error } = await supabase.from("Mangas").select("Género");
@@ -14,38 +16,45 @@ function Filter() {
         setGenders(data);
       }
     }
-    fetchGenders()
+    fetchGenders();
   }, []);
 
   if (!genders) {
     console.log(genders);
   } else {
-    const uniqueGenders = []
+    const uniqueGenders = [];
     genders.map((gender) => {
-        if(!uniqueGenders.includes(gender.Género)){
-            uniqueGenders.push(gender.Género)
-        }
-    })
+      if (!uniqueGenders.includes(gender.Género)) {
+        uniqueGenders.push(gender.Género);
+      }
+    });
     return (
-      <div>
-        {uniqueGenders.map((gender)=>(
-            <>
+      <div className={theme === "light" ? "filter Applight" : "filter Appdark"}>
+        <h2>Géneros</h2>
+        <div className="gender">
+          <label>
             <input
               name="gender"
-             type="radio"
-              value={gender}
-              onChange={(e) => changeGender(e.target.value)}
-            />
-            <label htmlFor="gender">{gender}</label>
-          </>
-        ))}
-        <input
-              name="gender"
-             type="radio"
+              type="radio"
               value="Todos"
               onChange={(e) => changeGender(e.target.value)}
             />
-            <label htmlFor="gender">Todos</label>
+            <span className={theme === "light" ? "Applight" : "Appdark"}>Todos</span>
+          </label>
+        </div>
+        {uniqueGenders.map((gender) => (
+          <div className="gender">
+            <label>
+              <input
+                name="gender"
+                type="radio"
+                value={gender}
+                onChange={(e) => changeGender(e.target.value)}
+              />
+              <span className={theme === "light" ? "Applight" : "Appdark"}>{gender}</span>
+            </label>
+          </div>
+        ))}
       </div>
     );
   }
