@@ -11,16 +11,9 @@ export function UserContextProvider({ children }) {
   useEffect(() => {
     const { data, error } = async () => await supabase.auth.getSession();
     setUserSession(data?.user ?? null);
-    //En caso de que cambie la sesión se redirige al usuario al inicio
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setUserSession(session?.user ?? null);
-        setUserSubscription(false)
-        navigate("/");
-      }
-    );
     //Función para guardar el estado de la suscripción del usuario en el estado userSubscription
     const getUserSubscription = async (userId) => {
+      console.log("Hola")
       const { data: Suscrito, error } = await supabase
         .from("Usuarios")
         .select("Suscrito")
@@ -29,9 +22,18 @@ export function UserContextProvider({ children }) {
       if (error) {
         console.log(error);
       } else {
+        console.log(Suscrito[0].Suscrito)
         setUserSubscription(Suscrito[0].Suscrito);
       }
     };
+    //En caso de que cambie la sesión se redirige al usuario al inicio
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        setUserSession(session?.user ?? null);
+        session.user!==null ? getUserSubscription(session.user.id) : setUserSubscription(false)
+        navigate("/");
+      }
+    );
   }, []);
 
   const value = {

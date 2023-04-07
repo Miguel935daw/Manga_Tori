@@ -7,7 +7,6 @@ function MangaInfo() {
   const { theme } = useTheme();
 
   if (!mangaSelected) {
-    console.log(mangaSelected);
     return (
       <>
         <p>Cargando...</p>

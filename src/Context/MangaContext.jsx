@@ -8,6 +8,7 @@ export function MangaContextProvider({ children }) {
   const [gender, setGender] = useState("Todos");
   const [mangaSelected, setMangaSelected] = useState(null);
   const [chapterSelected, setChapterSelected] = useState(null);
+  const [mangasOfTheMoment, setMangasOfTheMoment] = useState(null);
 
   //Función anónima para cambiar el estado de gender desde fuera del contexto
   const changeGender = function (newGender) {
@@ -15,12 +16,29 @@ export function MangaContextProvider({ children }) {
   };
   //Función anónima para cambiar el estado de mangaSelected desde fuera del contexto
   const selectManga = function (manga) {
-    setMangaSelected(manga)
+    updateVisits(manga);
+    setMangaSelected(manga);
   };
 
   const selectChapter = function (chapter) {
-    setChapterSelected(chapter)
+    setChapterSelected(chapter);
   };
+  async function updateVisits(manga) {
+    const { data } = await supabase
+      .from("Mangas")
+      .select("Visitas")
+      .eq("Manga_ID", manga.Manga_ID);
+    let newVisits = data[0].Visitas + 1;
+    const { error } = await supabase
+      .from("Mangas")
+      .update({ Visitas: newVisits })
+      .eq("Manga_ID", manga.Manga_ID);
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(error);
+    }
+  }
   useEffect(() => {
     async function fetchMangas() {
       if (gender == "Todos") {
@@ -42,14 +60,27 @@ export function MangaContextProvider({ children }) {
         }
       }
     }
-
+    async function fetchMangasOfTheMoment() {
+      const { data, error } = await supabase
+        .from("Mangas")
+        .select("*")
+        .order("Visitas", { ascending: false })
+        .limit(3);
+      if (error) {
+        console.log(error);
+      } else {
+        setMangasOfTheMoment(data);
+      }
+    }
     fetchMangas();
-  }, [gender]);
+    fetchMangasOfTheMoment();
+  }, [gender,mangaSelected]);
   const value = {
     mangas,
     gender,
     mangaSelected,
     chapterSelected,
+    mangasOfTheMoment,
     changeGender,
     selectManga,
     selectChapter,

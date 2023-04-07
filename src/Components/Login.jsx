@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { supabase } from "../supabase/client";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
+import { useTheme } from "../Context/ThemeContext";
+
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { theme } = useTheme();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -14,39 +17,60 @@ function Login() {
         email: email,
         password: password,
       });
+      if (error) {
+        document.getElementById("error").innerText =
+          "Credenciales de inicio de sesión inválidas";
+      }
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
   return (
-    <div>
+    <>
       <NavBar />
-      <form onSubmit={handleSubmit}>
-        <h1>Iniciar Sesión</h1>
-        <label htmlFor="email">Correo Electrónico</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="youremail@site.com"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <label htmlFor="password">Contraseña</label>
-        <input
-          type="password"
-          name="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button>Iniciar Sesión</button>
-      </form>
-      <button
-        onClick={() => {
-          navigate("/Register");
-        }}
-      >
-        Registrarse
-      </button>
-    </div>
+      <div className={theme === "light" ? "login Applight" : "login Appdark"}>
+        <form
+          onSubmit={handleSubmit}
+          className={theme === "light" ? "form Applight" : "form Appdark"}
+        >
+          <div className="header">
+            <img src="/images/logo.png" alt="logo" className="loginLogo" />
+            <h2>Iniciar Sesión</h2>
+          </div>
+          <div>
+            <label htmlFor="email">Correo Electrónico</label>
+            <input
+              className={theme === "light" ? "input Applight" : "input Appdark"}
+              type="email"
+              name="email"
+              placeholder="tucorreo@algo.com"
+              onChange={(e) => setEmail(e.target.value)}
+              autocomplete="off"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Contraseña</label>
+            <input
+              className={theme === "light" ? "input Applight" : "input Appdark"}
+              type="password"
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>{" "}
+          <button
+            className={theme === "light" ? "button Applight" : "button Appdark"}
+          >
+            Iniciar Sesión
+          </button>
+          <div className="error">
+            <p id="error"></p>
+          </div>
+        </form>
+      </div>
+    </>
   );
 }
 

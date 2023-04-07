@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { supabase } from "../supabase/client";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
+import { useTheme } from "../Context/ThemeContext";
+
 function comprobarContraseña(valor, campo) {
   //La contraseña debe tener mínimo 8 caracteres, una letra y un número
   let exp = /(?=\w*\d){1,}(?=\w*[a-zA-Z])\S{1,}/;
@@ -27,6 +29,8 @@ function Register() {
   //Variable para mostrar errores
   const [showError, setShowError] = useState(0);
 
+  const { theme } = useTheme();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -36,7 +40,7 @@ function Register() {
         password: password,
       });
       if (error) {
-        console.log(error)
+        console.log(error);
       } else {
         const values = {
           User_ID: data.user.id,
@@ -50,14 +54,12 @@ function Register() {
           .insert(values);
 
         if (insertError) {
-          console.log(insertError)
-          console.log()
           switch (insertError.code) {
-            case '23505':
-              setShowError(1)
+            case "23505":
+              setShowError(1);
               break;
-            case '23503':
-              setShowError(2)
+            case "23503":
+              setShowError(2);
               break;
           }
         } else {
@@ -69,58 +71,66 @@ function Register() {
     }
   };
   return (
-    <div >
-      <NavBar/>
-      {showConfirmation ? (
-        <p >
-          Se le ha enviado un correo de confirmación
-        </p>
-      ) : (
-        <form onSubmit={handleSubmit} >
-          <h1>Registrarse</h1>
-          <label htmlFor="email">
-            Correo Electrónico
-          </label>
-          <input
-            required
-            type="email"
-            name="email"
-            placeholder="youremail@site.com"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <label htmlFor="password">
-            Contraseña
-          </label>
-          <input
-            required
-            type="password"
-            name="password"
-            onChange={(e) => setPassword(e.target.value)}
-            onBlur={(e) => comprobarContraseña(e.target.value, e.target)}
-          />
-          <button>
-            Registrarse
-          </button>
-          <button
-            onClick={() => navigate("/Login")}
+    <>
+      <NavBar />
+      <div className={theme === "light" ? "login Applight" : "login Appdark"}>
+        {showConfirmation ? (
+          <p>Se le ha enviado un correo de confirmación</p>
+        ) : (
+          <form
+            onSubmit={handleSubmit}
+            className={theme === "light" ? "form Applight" : "form Appdark"}
           >
-            Volver a Iniciar Sesión
-          </button>
-          {showError == 1 && (
-            <p>
-              Se le ha enviado un correo de confirmación al email que usó para
-              el registro, revíselo
-            </p>
-          )}
-          {showError == 2 && (
-            <p>
-              El email que está introduciendo ya ha sido registrado con éxito,
-              puede volver para iniciar sesión con el botón de arriba
-            </p>
-          )}
-        </form>
-      )}
-    </div>
+            <div className="header">
+              <img src="/images/logo.png" alt="logo" className="loginLogo" />
+              <h2>Registrarse</h2>
+            </div>
+            <div>
+              <label htmlFor="email">Correo Electrónico</label>
+              <input
+                className={
+                  theme === "light" ? "input Applight" : "input Appdark"
+                }
+                required
+                type="email"
+                name="email"
+                placeholder="tucorreo@algo.com"
+                onChange={(e) => setEmail(e.target.value)}
+                autocomplete="off"
+              />
+            </div>
+            <div>
+              <label htmlFor="password">Contraseña</label>
+              <input
+                className={
+                  theme === "light" ? "input Applight" : "input Appdark"
+                }
+                required
+                type="password"
+                name="password"
+                onChange={(e) => setPassword(e.target.value)}
+                onBlur={(e) => comprobarContraseña(e.target.value, e.target)}
+              />
+            </div>
+            <button
+              className={
+                theme === "light" ? "button Applight" : "button Appdark"
+              }
+            >
+              Registrarse
+            </button>
+            <div className="error">
+              <p id="error">
+                {showError == 1 &&
+                  "Se le ha enviado un correo de confirmación al email que usó para el registro, revíselo"}
+                {showError == 2 &&
+                  'El email que está introduciendo ya ha sido registrado con éxito, puede iniciar sesión pulsando en "Iniciar Sesión" en la esquina superior derecha'}
+              </p>
+            </div>
+          </form>
+        )}
+      </div>
+    </>
   );
 }
 
