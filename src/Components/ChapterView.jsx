@@ -1,7 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import { useManga } from "../Context/MangaContext";
+import { useNavigate } from "react-router-dom";
 function ChapterView() {
   const { mangaSelected, chapterSelected, selectChapter, setMangaSelected } = useManga();
+  const navigate = useNavigate();
   useEffect(() => {
     if (chapterSelected) {
       localStorage.setItem("chapterSelected", JSON.stringify(chapterSelected));
@@ -10,12 +12,11 @@ function ChapterView() {
 
   useEffect(() => {
     const storedState = localStorage.getItem("chapterSelected");
-    const storedState2 = localStorage.getItem("mangaSelected")
     if (storedState) {
       selectChapter(JSON.parse(storedState));
-      setMangaSelected(JSON.parse(storedState2))
+      setMangaSelected(JSON.parse(localStorage.getItem("mangaSelected")))
     }
-  }, [selectChapter]);
+  }, []);
   if (!chapterSelected) {
     return (
       <>
