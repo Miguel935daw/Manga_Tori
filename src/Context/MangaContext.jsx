@@ -81,6 +81,7 @@ export function MangaContextProvider({ children }) {
     mangaSelected,
     chapterSelected,
     mangasOfTheMoment,
+    setMangaSelected,
     changeGender,
     selectManga,
     selectChapter,

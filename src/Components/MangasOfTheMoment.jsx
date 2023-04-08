@@ -30,6 +30,7 @@ function MangasOfTheMoment() {
               onClick={() => {
                 selectManga(manga);
                 navigate("/Manga");
+                window.scrollTo(0, 0);
               }}
             />
             <h2 className="title">{manga.Nombre}</h2>

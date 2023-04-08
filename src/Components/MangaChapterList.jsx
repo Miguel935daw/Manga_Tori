@@ -1,13 +1,15 @@
+import { useState, useEffect, useContext } from "react";
 import { useManga } from "../Context/MangaContext";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../Context/ThemeContext";
 import { useAuth } from "../Context/UserContext";
 function MangaChapterList() {
-  const { mangaSelected, selectChapter } = useManga();
+  //Importo los estados y setter necesarios
+  const { mangaSelected, setMangaSelected, selectChapter } = useManga();
   const { userSession, userSubscription } = useAuth();
   const navigate = useNavigate();
   const { theme } = useTheme();
-
+  //Función para hacer que aparezca el popUp
   const popUp = (chapter) => {
     if (userSubscription !== true || userSession === null) {
       document.getElementById("overlay").style.display = "block";
@@ -19,6 +21,21 @@ function MangaChapterList() {
       navigate("/Chapter");
     }
   };
+  //Use Effect para guardar el manga seleccionado en el localStorage
+  useEffect(() => {
+    if (mangaSelected) {
+      localStorage.setItem("mangaSelected", JSON.stringify(mangaSelected));
+    }
+  }, [mangaSelected]);
+
+  useEffect(() => {
+    const storedState = localStorage.getItem("mangaSelected");
+    if (storedState) {
+      setMangaSelected(JSON.parse(storedState));
+    }
+  }, [setMangaSelected]);
+
+  
   if (!mangaSelected) {
     return (
       <>
@@ -40,7 +57,7 @@ function MangaChapterList() {
             <button id="close">Cerrar</button>
           </div>
         </div>
-        
+
         <h2 className="title2">Capítulos</h2>
         <span className="bar"></span>
         {chapters.map((chapter, index) => (
