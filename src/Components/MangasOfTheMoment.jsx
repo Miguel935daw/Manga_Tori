@@ -18,8 +18,8 @@ function MangasOfTheMoment() {
   return (
     <div className={theme === "light" ? "Applight" : "Appdark"}>
       <div>
-        <h2 className="title">Mangas del momento</h2>
-        <span className="bar2"></span>
+        <h2 className={theme === "light" ? "title Applight" : "title Appdark"}>Mangas del momento</h2>
+        <span className={theme === "light" ? "bar2 Applight" : "bar2 Appdark"}></span>
       </div>
       <div className="mangasOTM">
         {mangasOfTheMoment.map((manga) => (
@@ -33,7 +33,7 @@ function MangasOfTheMoment() {
                 window.scrollTo(0, 0);
               }}
             />
-            <h2 className="title">{manga.Nombre}</h2>
+            <h2 className={theme === "light" ? "title Applight" : "title Appdark"}>{manga.Nombre}</h2>
           </div>
         ))}
       </div>

@@ -44,7 +44,7 @@ function MangaList() {
                       window.scrollTo(0, 0);
                     }}
                   />
-                  <h2 className="title">{manga.Nombre}</h2>
+                  <h2 className={theme === "light" ? "title Applight" : "title Appdark"}>{manga.Nombre}</h2>
                 </div>
               ))}
             </div>

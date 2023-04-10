@@ -58,8 +58,8 @@ function MangaChapterList() {
           </div>
         </div>
 
-        <h2 className="title2">Capítulos</h2>
-        <span className="bar"></span>
+        <h2 className={theme === "light" ? "title Applight" : "title Appdark"}>Capítulos</h2>
+        <span className={theme === "light" ? "bar Applight" : "bar Appdark"}></span>
         {chapters.map((chapter, index) => (
           <div
             className={
