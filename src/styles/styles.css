@@ -7,34 +7,43 @@
 
 /* Pantallas 1440p */
 @media (min-width: 2560px) and (max-width: 3839px) {
-  .title{
+  .title {
     font-size: 2em;
   }
-  .sinopsis{
+  .sinopsis {
     font-size: 2em;
   }
-  .form{
-    width: 17.41%
+  .form {
+    width: 17.41%;
   }
 }
 
 /* Pantallas 1080p */
-@media (min-width: 1920px) and (max-width: 2559px) {
-  .title{
-    font-size: 2em
+@media (min-width: 720px) and (max-width: 2559px) {
+  .title {
+    font-size: 1.5em;
   }
-  .sinopsis{
+  .sinopsis {
     font-size: 1.5em;
     height: auto;
   }
-  .form{
+  .form {
     width: 27.41%;
+  }
+  .data {
+    font-size: 1em;
   }
 }
 
-.container{
+.container {
   width: 100%;
   height: 50%;
+}
+
+.icon {
+  width: 10vh;
+  max-width: 5vh;
+  height: 5vh;
 }
 
 nav {
@@ -46,7 +55,7 @@ nav {
   font-weight: 400;
   font-size: 1.5em;
 }
-main{
+main {
   min-height: 100vh;
   height: auto;
 }
@@ -78,29 +87,33 @@ a:hover {
   margin-bottom: auto;
   font-style: normal;
   font-weight: 400;
-  
 }
-.title.Appdark{
+.title.Appdark {
   color: #ffffff;
 }
-.title.Applight{
+.title.Applight {
   color: #ff3131;
 }
 ul {
   display: flex;
+  align-items: stretch;
   align-items: center;
   justify-content: flex-end;
   list-style: none;
   width: 100%;
+  height: 14.72%;
   margin: 0;
   padding: 0;
   text-align: right; /* Para que los enlaces estén a la derecha */
 }
 
 li {
-  display: inline-block; /* Para que los enlaces estén en línea */
-  margin-left: 20px;
-  margin-right: 20px; /* Para separar los enlaces entre sí */
+  display: inline-flex;
+  width: fit-content;
+  max-width: 10%;
+  margin-left: 1%;
+  margin-right: 1%; /* Para separar los enlaces entre sí */
+  cursor: pointer;
 }
 
 .manga {
@@ -123,7 +136,7 @@ li {
   min-height: 100vh;
   height: auto;
 }
-span{
+span {
   font-size: 1.5em;
 }
 .section {
@@ -158,7 +171,7 @@ span{
   background-color: #ff3633;
 }
 
-.mangasOTM .manga{
+.mangasOTM .manga {
   height: 87.32%;
 }
 .mangasOTM div {
@@ -268,7 +281,7 @@ label > input[type="radio"] + * {
   border-radius: 21px;
   margin: 1.81% 1.73% 0px 1.73%;
 }
-.info div{
+.info div {
   display: flex;
   flex-direction: column;
 }
@@ -280,17 +293,17 @@ label > input[type="radio"] + * {
   border-radius: 10px;
 }
 
-.bar.Applight{
+.bar.Applight {
   background-color: #ff3633;
 }
-.bar.Appdark{
+.bar.Appdark {
   background-color: #ffffff;
 }
 
-.bar2.Applight{
+.bar2.Applight {
   background-color: #ff3633;
 }
-.bar2.Appdark{
+.bar2.Appdark {
   background-color: #ffffff;
 }
 .mangaChapterList {
@@ -323,11 +336,35 @@ label > input[type="radio"] + * {
   margin-right: 37px;
 }
 .page {
-  width: 1000px;
-  height: 1100px;
-  margin: 20px;
+  width: 100%;
+  height: 100%;
+}
+.page.Appdark{
+  box-shadow: 0px 0px 20px 15px rgba(255, 54, 51, 0.25);
+}
+.page.Applight{
+  box-shadow: 0px 0px 20px 15px rgba(0, 0, 0, 0.25);
+}
+.chapters {
+  width: 90%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2%;
+  border-radius: 21px;
+  margin-bottom: 2%;
+}
+.chapters.Appdark{
+  background-color: #2f2e5e;
+}
+.chapters.Applight{
+  background-color: #ffffff;
 }
 
+.chapters div:first-child{
+  margin-top: 4%;
+}
 /* Estilo base del toggle button */
 .toggle-button {
   display: flex;

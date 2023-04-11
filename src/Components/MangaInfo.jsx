@@ -25,10 +25,10 @@ function MangaInfo() {
           <div>
             <h1>{mangaSelected.Nombre}</h1>
             <p className="sinopsis">{mangaSelected.Sinopsis}</p>
-            <h2>Género: {mangaSelected.Género}</h2>
-            <h2>Autor: {mangaSelected.Autor}</h2>
-            <h2>Editorial: {mangaSelected.Editorial}</h2>
-            <h2>Estado: {state}</h2>
+            <h2 className="data">Género: {mangaSelected.Género}</h2>
+            <h2 className="data">Autor: {mangaSelected.Autor}</h2>
+            <h2 className="data">Editorial: {mangaSelected.Editorial}</h2>
+            <h2 className="data">Estado: {state}</h2>
           </div>
         </div>
       </div>

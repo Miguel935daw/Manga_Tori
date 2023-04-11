@@ -1,7 +1,9 @@
 import ChapterView from "./ChapterView"
+import ChapterBar from "./ChapterBar"
 function View() {
   return (
     <>
+        <ChapterBar />
         <ChapterView />
     </>
   );

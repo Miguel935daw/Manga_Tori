@@ -1,9 +1,14 @@
 import { useState, useEffect, useContext } from "react";
 import { useManga } from "../Context/MangaContext";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "../Context/ThemeContext";
+import { useChapter } from "../Context/ChapterContext";
+import PageSlider from "./PageSlider";
 function ChapterView() {
-  const { mangaSelected, chapterSelected, selectChapter, setMangaSelected } = useManga();
-  const navigate = useNavigate();
+  const { mangaSelected, chapterSelected, selectChapter, setMangaSelected } =
+    useManga();
+  const { theme } = useTheme();
+  const { viewMode, separation, width } = useChapter();
   useEffect(() => {
     if (chapterSelected) {
       localStorage.setItem("chapterSelected", JSON.stringify(chapterSelected));
@@ -14,7 +19,7 @@ function ChapterView() {
     const storedState = localStorage.getItem("chapterSelected");
     if (storedState) {
       selectChapter(JSON.parse(storedState));
-      setMangaSelected(JSON.parse(localStorage.getItem("mangaSelected")))
+      setMangaSelected(JSON.parse(localStorage.getItem("mangaSelected")));
     }
   }, []);
   if (!chapterSelected) {
@@ -24,19 +29,47 @@ function ChapterView() {
       </>
     );
   } else {
+    if (!viewMode) {
+      return (
+        <div
+          style={{
+            width: width === false ? "50%" : "100%",
+          }}
+        >
+          <PageSlider />
+        </div>
+      );
+    }
     return (
-      <>
-        {mangaSelected.Capitulos[chapterSelected].map((page) => (
-          <div>
-            <img
-              src={page}
-              alt=""
-              className="page"
-              style={{ border: "5px solid black" }}
-            />
-          </div>
-        ))}
-      </>
+      <div
+        className={theme === "light" ? "Applight" : "Appdark"}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <div
+          className={
+            theme === "light" ? "chapters Applight" : "chapters Appdark"
+          }
+        >
+          {mangaSelected.Capitulos[chapterSelected].map((page) => (
+            <div
+              style={{
+                width: width === false ? "50%" : "100%",
+                marginBottom: separation === false ? "0px" : "4%",
+              }}
+            >
+              <img
+                src={page}
+                alt=""
+                className={theme === "light" ? "page Applight" : "page Appdark"}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
     );
   }
 }
