@@ -16,6 +16,26 @@
   .form {
     width: 17.41%;
   }
+  .center {
+    top: 0px;
+    left: 700px;
+  }
+  .left1 {
+    top: 110px;
+    left: 597px;
+  }
+  .left2 {
+    top: 150px;
+    left: 518px;
+  }
+  .right1 {
+    top: 110px;
+    left: 930px;
+  }
+  .right2 {
+    top: 150px;
+    left: 1115px;
+  }
 }
 
 /* Pantallas 1080p */
@@ -32,6 +52,26 @@
   }
   .data {
     font-size: 1em;
+  }
+  .center {
+    top: 60px;
+    left: 550px;
+  }
+  .left1 {
+    top: 110px;
+    left: 460px;
+  }
+  .left2 {
+    top: 150px;
+    left: 400px;
+  }
+  .right1 {
+    top: 110px;
+    left: 750px;
+  }
+  .right2 {
+    top: 150px;
+    left: 900px;
   }
 }
 
@@ -339,10 +379,10 @@ label > input[type="radio"] + * {
   width: 100%;
   height: 100%;
 }
-.page.Appdark{
+.page.Appdark {
   box-shadow: 0px 0px 20px 15px rgba(255, 54, 51, 0.25);
 }
-.page.Applight{
+.page.Applight {
   box-shadow: 0px 0px 20px 15px rgba(0, 0, 0, 0.25);
 }
 .chapters {
@@ -355,15 +395,11 @@ label > input[type="radio"] + * {
   border-radius: 21px;
   margin-bottom: 2%;
 }
-.chapters.Appdark{
+.chapters.Appdark {
   background-color: #2f2e5e;
 }
-.chapters.Applight{
+.chapters.Applight {
   background-color: #ffffff;
-}
-
-.chapters div:first-child{
-  margin-top: 4%;
 }
 /* Estilo base del toggle button */
 .toggle-button {
@@ -577,4 +613,57 @@ input {
   background-color: white;
   padding: 20px;
   text-align: center;
+}
+
+/* Clases para slider */
+.center {
+  width: 36%;
+  height: 100%;
+
+  z-index: 2;
+  filter: brightness(1);
+  position: absolute;
+}
+.left1 {
+  width: 30%;
+  height: 75.34%;
+
+  z-index: 1;
+  filter: brightness(0.3);
+  position: absolute;
+}
+.left2 {
+  width: 25%;
+  height: 64.93%;
+
+  z-index: 0;
+  filter: brightness(0.1);
+  position: absolute;
+}
+.right1 {
+  width: 30%;
+  height: 75.34%;
+
+  z-index: 1;
+  filter: brightness(0.3);
+  position: absolute;
+}
+.right2 {
+  width: 25%;
+  height: 64.93%;
+
+  z-index: 0;
+  filter: brightness(0.1);
+  position: absolute;
+}
+.invisible {
+  display:none;
+}
+.center,
+.left1,
+.left2,
+.right1,
+.right2 {
+  position: absolute;
+  transition: top 0.5s ease-out, left 0.5s ease-out, width 0.5s ease-out, height 0.5s ease-out, filter 0.5s ease-out, z-index 0.5s ease-out;
 }

@@ -32,8 +32,12 @@ function ChapterView() {
     if (!viewMode) {
       return (
         <div
+          className={theme === "light" ? "Applight" : "Appdark"}
           style={{
-            width: width === false ? "50%" : "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            minHeight: "90vh"
           }}
         >
           <PageSlider />
@@ -59,6 +63,7 @@ function ChapterView() {
               style={{
                 width: width === false ? "50%" : "100%",
                 marginBottom: separation === false ? "0px" : "4%",
+                marginTop: viewMode ? "4%" : "0%"
               }}
             >
               <img

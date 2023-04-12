@@ -23,87 +23,87 @@ function PageSlider() {
 
   const pages = mangaSelected.Capitulos[chapterSelected];
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const ancho = (index) => {
-    if (index == selectedIndex) {
-      return "50%";
-    } else if (index == selectedIndex + 1 || index == selectedIndex - 1) {
-      return "30%";
-    } else {
-      return "17%";
-    }
-  };
-
   const mostrar = (index) => {
-    if (
-      index == selectedIndex ||
-      index == selectedIndex - 1 ||
-      index == selectedIndex - 2 ||
-      index == selectedIndex + 1 ||
-      index == selectedIndex + 2
-    ) {
-      return "block";
+    if (index == selectedIndex) {
+      return "center";
+    } else if (index == selectedIndex + 1) {
+      return "right1";
+    } else if (index == selectedIndex - 1) {
+      return "left1";
+    } else if (index == selectedIndex - 2) {
+      return "left2";
+    } else if (index == selectedIndex + 2) {
+      return "right2";
     } else {
-      return "none";
+      return "invisible";
     }
   };
 
-  const sombrear = (index) => {
-     if (index == selectedIndex + 1 || index == selectedIndex - 1) {
-      return "linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));";
-    } else if(index == selectedIndex + 2 || index == selectedIndex - 2 ){
-      return "linear-gradient(0deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9))";
-    }else{
-        return "none"
-    }
-  };
-
+  // const grande = () =>{
+  //   if(document.getElementsByClassName("right1")[0].children[0].naturalWidth > 1000){
+  //     document.getElementsByClassName("right1")[0].style.width = "72%"
+  //     document.getElementsByClassName("right1")[0].style.left = "290px" 
+  //   }else{
+  //     document.getElementsByClassName("right1")[0].style.width = "36%"
+  //     document.getElementsByClassName("center")[0].style.width = "30%"
+  //     document.getElementsByClassName("center")[0].style.left = "597px"
+  //   }
+  // }
   const previous = () => {
     setSelectedIndex(selectedIndex - 1);
   };
   const next = () => {
     setSelectedIndex(selectedIndex + 1);
+    
   };
 
-  console.log(pages.length);
-
   return (
-    <>
-      <button
+    <div
+      className={theme === "light" ? "chapters Applight" : "chapters Appdark"}
+      style={{
+        minHeight: "80vh",
+        height: "80vh",
+        display: "flex",
+        flexDirection: "row",
+      }}
+    >
+      <img
+        src="/images/previous.png"
         onClick={() => {
           previous();
-          console.log(selectedIndex);
         }}
         style={{ display: selectedIndex == 0 ? "none" : "block" }}
-      >
-        Atrás
-      </button>
-      <button
-        onClick={() => {
-          next();
-          console.log(selectedIndex);
+      />
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          width: "100%",
+          alignItems: "center",
+          height: "90%",
+          position: "relative",
         }}
-        style={{ display: selectedIndex == pages.length ? "none" : "block" }}
       >
-        Adelante
-      </button>
-      <div style={{ display: "flex", flexDirection: "row" }}>
         {pages.map((page) => (
-          <div
-            style={{
-              width: ancho(pages.indexOf(page)),
-              display: mostrar(pages.indexOf(page)),
-            }}
-          >
+          <div className={mostrar(pages.indexOf(page))}>
             <img
               src={page}
               alt=""
               className={theme === "light" ? "page Applight" : "page Appdark"}
-              style={{background: sombrear(pages.indexOf(page))}}
             />
           </div>
         ))}
       </div>
-    </>
+      <img
+        src="/images/next.png"
+        onClick={() => {
+          next();
+          //grande()
+        }}
+        style={{ display: selectedIndex == pages.length-1 ? "none" : "block" }}
+      />
+    </div>
   );
 }
 
