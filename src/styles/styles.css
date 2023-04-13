@@ -702,3 +702,16 @@ input {
 .slide3 {
   left: 200%;
 }
+
+.sliderHome {
+  min-height: 80vh;
+  height: 80vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.sliderHome{
+  transition: background 1s ease-in-out;
+}

@@ -11,6 +11,7 @@ function Slider() {
     "/images/slider3.png",
   ];
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [counter, setCounter] = useState(0);
   const mostrar = (index) => {
     if (index == selectedIndex) {
       return "slide slide1";
@@ -23,38 +24,54 @@ function Slider() {
   const previous = () => {
     const slides = document.getElementsByClassName("slide");
     for (let i = 0; i < slides.length; i++) {
-        slides[i].style.left = parseFloat(getComputedStyle(slides[i]).left)/parseFloat(getComputedStyle(slides[i]).width)*100 + 100 + "%";
-      }
+      slides[i].style.left =
+        (parseFloat(getComputedStyle(slides[i]).left) /
+          parseFloat(getComputedStyle(slides[i]).width)) *
+          100 +
+        100 +
+        "%";
+    }
+    setCounter(counter - 1);
   };
   const next = () => {
     const slides = document.getElementsByClassName("slide");
     for (let i = 0; i < slides.length; i++) {
-      slides[i].style.left = parseFloat(getComputedStyle(slides[i]).left)/parseFloat(getComputedStyle(slides[i]).width)*100 - 100 + "%";
+      console.log(
+        parseFloat(getComputedStyle(slides[i]).left) /
+          parseFloat(getComputedStyle(slides[i]).width)
+      );
+      slides[i].style.left =
+        (parseFloat(getComputedStyle(slides[i]).left) /
+          parseFloat(getComputedStyle(slides[i]).width)) *
+          100 -
+        100 +
+        "%";
+    }
+    setCounter(counter + 1);
+  };
+  const backGround = () => {
+    if (counter == 0) {
+      return "linear-gradient(180deg, #CB5CFF 16.91%, #3151A5 100%)";
+    } else if (counter == 1) {
+      return "linear-gradient(180deg, #565582 32.81%, #317BA5 100%)";
+    } else {
+      return "linear-gradient(180deg, #0F0404 32.81%, #4F0000 100%)";
     }
   };
-  const ocultar = (number) {
-    
-  }
-
   return (
     <div
-      className="slider"
+      className="sliderHome"
       style={{
-        minHeight: "80vh",
-        height: "80vh",
-        width: "100%",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
+        background: backGround(),
       }}
     >
       <img
         src="/images/previous.png"
         className="sliderButton1"
         onClick={() => {
-            previous()
+          counter == 0 ? "" : previous();
         }}
-        style={{ opacity:  width: "5%" }}
+        style={{ opacity: counter == 0 ? "0" : "1", width: "5%" }}
       />
 
       <div
@@ -81,10 +98,10 @@ function Slider() {
         src="/images/next.png"
         className="sliderButton2"
         onClick={() => {
-            next() 
+          counter == 2 ? "" : next();
         }}
         style={{
-          opacity: selectedIndex == images.length - 1 ? "0" : "1",
+          opacity: counter == 2 ? "0" : "1",
           width: "5%",
         }}
       />
