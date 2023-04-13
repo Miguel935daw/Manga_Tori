@@ -54,14 +54,15 @@ function ChapterBar() {
           )}
           <a>{viewMode === false ? "Cascada" : "Paginada"}</a>
         </li>
-        <li onClick={() => setWidth(!width)}>
+        {viewMode ? (<li onClick={() => setWidth(!width)}>
           {width === false ? (
             <img src="/images/WidthIcon.png" alt="Ancho" className="icon" />
           ) : (
             <img src="/images/NarrowIcon.png" alt="Estrecho" className="icon" />
           )}
           <a>{width === false ? "Ancho" : "Estrecho"}</a>
-        </li>
+        </li>) : ""}
+        
         {viewMode === true ? (
           <li onClick={() => setSeparation(!separation)}>
             <img

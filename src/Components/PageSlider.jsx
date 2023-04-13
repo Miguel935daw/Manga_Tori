@@ -23,6 +23,7 @@ function PageSlider() {
 
   const pages = mangaSelected.Capitulos[chapterSelected];
   const [selectedIndex, setSelectedIndex] = useState(0);
+  
   const mostrar = (index) => {
     if (index == selectedIndex) {
       return "center";
@@ -69,10 +70,11 @@ function PageSlider() {
     >
       <img
         src="/images/previous.png"
+        className="sliderButton1"
         onClick={() => {
-          previous();
+          selectedIndex != 0 ? previous() : "" 
         }}
-        style={{ display: selectedIndex == 0 ? "none" : "block" }}
+        style={{ opacity: selectedIndex == 0 ? "0" : "1", width:"5%"}}
       />
 
       <div
@@ -97,11 +99,12 @@ function PageSlider() {
       </div>
       <img
         src="/images/next.png"
+        className="sliderButton2"
         onClick={() => {
-          next();
+          selectedIndex != pages.length-1 ? next() : "" 
           //grande()
         }}
-        style={{ display: selectedIndex == pages.length-1 ? "none" : "block" }}
+        style={{ opacity: selectedIndex == pages.length-1 ? "0" : "1", width: "5%"}}
       />
     </div>
   );

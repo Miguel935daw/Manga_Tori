@@ -1,10 +1,5 @@
 import NavBar from "./NavBar";
-import { useEffect, useState } from "react";
-import { supabase } from "../supabase/client";
-import { useNavigate } from "react-router-dom";
 import Slider from "./Slider.jsx";
-import Biblioteca from "./Biblioteca";
-import MangaList from "./MangaList";
 import MangasOfTheMoment from "./MangasOfTheMoment";
 
 function Home() {
@@ -17,7 +12,7 @@ function Home() {
   return (
     <>
       <NavBar />
-      <Slider images={images} />
+      <Slider/>
       <MangasOfTheMoment />
     </>
   );

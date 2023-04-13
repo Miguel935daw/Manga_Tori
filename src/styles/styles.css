@@ -44,7 +44,7 @@
     font-size: 1.5em;
   }
   .sinopsis {
-    font-size: 1.5em;
+    font-size: 1em;
     height: auto;
   }
   .form {
@@ -54,24 +54,24 @@
     font-size: 1em;
   }
   .center {
-    top: 60px;
-    left: 550px;
+    top: 0px;
+    left: 444px;
   }
   .left1 {
-    top: 110px;
-    left: 460px;
+    top: 60px;
+    left: 393px;
   }
   .left2 {
-    top: 150px;
-    left: 400px;
+    top: 90px;
+    left: 343px;
   }
   .right1 {
-    top: 110px;
-    left: 750px;
+    top: 60px;
+    left: 579px;
   }
   .right2 {
-    top: 150px;
-    left: 900px;
+    top: 90px;
+    left: 695px;
   }
 }
 
@@ -117,7 +117,9 @@ a:hover {
   float: left;
   cursor: pointer;
 }
-
+h1 {
+  margin-bottom: 15px;
+}
 .title2 {
   margin: 0px;
   margin-bottom: 5px;
@@ -307,7 +309,7 @@ label > input[type="radio"] + * {
 
 .portadaInfo {
   box-shadow: 0px 0px 20px 10px rgba(234, 46, 46, 0.38);
-  width: 13.94%;
+  width: 16%;
   height: 87.31%;
   margin: 1.81% 1.73% 1.73% 1.73%;
 }
@@ -371,6 +373,7 @@ label > input[type="radio"] + * {
 .sinopsis {
   max-width: 95%;
   text-align: justify;
+  margin-top: 0px;
 }
 .view {
   margin-right: 37px;
@@ -657,7 +660,7 @@ input {
   position: absolute;
 }
 .invisible {
-  display:none;
+  display: none;
 }
 .center,
 .left1,
@@ -665,5 +668,37 @@ input {
 .right1,
 .right2 {
   position: absolute;
-  transition: top 0.5s ease-out, left 0.5s ease-out, width 0.5s ease-out, height 0.5s ease-out, filter 0.5s ease-out, z-index 0.5s ease-out;
+  transition: top 0.5s ease-out, left 0.5s ease-out, width 0.5s ease-out,
+    height 0.5s ease-out, filter 0.5s ease-out, z-index 0.5s ease-out;
+}
+
+.sliderButton1 {
+  position: absolute;
+  top: 400px;
+  left: 250px;
+  z-index: 2;
+}
+
+.sliderButton2 {
+  position: absolute;
+  top: 400px;
+  left: 1200px;
+}
+.slide {
+  left: 0px;
+}
+.slide {
+  transition: left 0.5s ease-out, right 0.5s ease-out;
+}
+
+.slide1 {
+  left: 0%;
+}
+
+.slide2 {
+  left: 100%;
+}
+
+.slide3 {
+  left: 200%;
 }
