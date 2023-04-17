@@ -11,48 +11,29 @@ function Slider() {
     "/images/slider3.png",
   ];
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [counter, setCounter] = useState(0);
   const mostrar = (index) => {
     if (index == selectedIndex) {
-      return "slide slide1";
+      return "slide0";
     } else if (index == selectedIndex + 1) {
-      return "slide slide2";
-    } else {
-      return "slide slide3";
+      return "slide1";
+    } else if (index == selectedIndex + 2) {
+      return "slide2";
+    } else if (index == selectedIndex - 1) {
+      return "slide-1";
+    } else if (index == selectedIndex - 2) {
+      return "slide-2";
     }
   };
   const previous = () => {
-    const slides = document.getElementsByClassName("slide");
-    for (let i = 0; i < slides.length; i++) {
-      slides[i].style.left =
-        (parseFloat(getComputedStyle(slides[i]).left) /
-          parseFloat(getComputedStyle(slides[i]).width)) *
-          100 +
-        100 +
-        "%";
-    }
-    setCounter(counter - 1);
+    setSelectedIndex(selectedIndex-1)
   };
   const next = () => {
-    const slides = document.getElementsByClassName("slide");
-    for (let i = 0; i < slides.length; i++) {
-      console.log(
-        parseFloat(getComputedStyle(slides[i]).left) /
-          parseFloat(getComputedStyle(slides[i]).width)
-      );
-      slides[i].style.left =
-        (parseFloat(getComputedStyle(slides[i]).left) /
-          parseFloat(getComputedStyle(slides[i]).width)) *
-          100 -
-        100 +
-        "%";
-    }
-    setCounter(counter + 1);
+    setSelectedIndex(selectedIndex + 1)
   };
   const backGround = () => {
-    if (counter == 0) {
+    if (selectedIndex == 0) {
       return "linear-gradient(180deg, #CB5CFF 16.91%, #3151A5 100%)";
-    } else if (counter == 1) {
+    } else if (selectedIndex == 1) {
       return "linear-gradient(180deg, #565582 32.81%, #317BA5 100%)";
     } else {
       return "linear-gradient(180deg, #0F0404 32.81%, #4F0000 100%)";
@@ -62,16 +43,16 @@ function Slider() {
     <div
       className="sliderHome"
       style={{
-        background: backGround(),
+        backgroundImage: backGround(),
       }}
     >
       <img
         src="/images/previous.png"
         className="sliderButton1"
         onClick={() => {
-          counter == 0 ? "" : previous();
+          selectedIndex == 0 ? "" : previous();
         }}
-        style={{ opacity: counter == 0 ? "0" : "1", width: "5%" }}
+        style={{ opacity: selectedIndex == 0 ? "0" : "1", width: "5%" }}
       />
 
       <div
@@ -98,10 +79,10 @@ function Slider() {
         src="/images/next.png"
         className="sliderButton2"
         onClick={() => {
-          counter == 2 ? "" : next();
+          selectedIndex == 2 ? "" : next();
         }}
         style={{
-          opacity: counter == 2 ? "0" : "1",
+          opacity: selectedIndex == 2 ? "0" : "1",
           width: "5%",
         }}
       />

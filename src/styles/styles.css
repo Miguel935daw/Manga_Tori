@@ -125,7 +125,6 @@ h1 {
   margin-bottom: 5px;
 }
 .title {
-  margin-top: 20px;
   margin-bottom: auto;
   font-style: normal;
   font-weight: 400;
@@ -448,7 +447,20 @@ label > input[type="radio"] + * {
   background-color: #2195f300;
   border: 2px solid rgb(255, 255, 255);
 }
-
+#close{
+  width: 5%;
+}
+.close.Appdark{
+  color: #2f2e5e;
+}
+.close.Appdark{
+  color: white;
+}
+.suscribe{
+  background-color: #ff3131;
+  color: white;
+  border-radius: 10px;
+}
 /*Modo Claro */
 nav.Applight {
   background-color: white;
@@ -606,16 +618,27 @@ input {
   display: none;
 }
 
-#message {
+.message {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 400px;
-  background-color: white;
+  width: 70%;
+  max-width: 350px;
   padding: 20px;
-  text-align: center;
+  align-items: center;
+  text-align: justify;
+  color: #FF3633;
+  border-radius: 21px;
+}
+.message.Appdark {
+  background-color: #2f2e5e;
+}
+
+.message.bar.Applight {
+  background-color: white;
 }
 
 /* Clases para slider */
@@ -691,15 +714,23 @@ input {
   transition: left 0.5s ease-out, right 0.5s ease-out;
 }
 
-.slide1 {
+.slide-1 {
+  left: -100%;
+}
+
+.slide-2 {
+  left: -200%;
+}
+
+.slide0 {
   left: 0%;
 }
 
-.slide2 {
+.slide1 {
   left: 100%;
 }
 
-.slide3 {
+.slide2 {
   left: 200%;
 }
 
@@ -712,6 +743,6 @@ input {
   justify-content: center;
 }
 
-.sliderHome{
-  transition: background 1s ease-in-out;
+.sliderHome {
+  transition: opacity 1s ease-out;
 }

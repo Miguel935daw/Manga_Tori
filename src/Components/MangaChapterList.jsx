@@ -35,7 +35,6 @@ function MangaChapterList() {
     }
   }, [setMangaSelected]);
 
-  
   if (!mangaSelected) {
     return (
       <>
@@ -48,18 +47,32 @@ function MangaChapterList() {
       //Elemento para el Pop Up
       <div className="mangaChapterList">
         <div id="overlay">
-          <div id="message">
+          <div
+            className={
+              theme === "light" ? "message Applight" : "message Appdark"
+            }
+          >
+            <div style={{justifyContent:"end", display: "flex", width: "100%"}}>
+              <img src="/images/close.png" alt="cerrar" id="close" />
+            </div>
+            <img src="/images/logo.png" alt="logo" className="loginLogo" />
             <p>
-              Para poder leer sin límites debes disfrutar de nuestra
-              suscripción, sin ella solo podrás acceder a los 5 primeros
-              capítulos de nuestros mangas.
+              Parece que no estas suscrito, así solo podrás acceder a los 5
+              primeros capítulos de nuestros mangas. Recuerda que suscribiéndote
+              no solo obtienes acceso a todo nuestro catálogo, sino que también
+              obtienes otras ventajas tales como la posibilidad de descargar los
+              capítulos que quieras y crear tus propias listas.
             </p>
-            <button id="close">Cerrar</button>
+            <button className="suscribe">Suscribirse</button>
           </div>
         </div>
 
-        <h2 className={theme === "light" ? "title Applight" : "title Appdark"}>Capítulos</h2>
-        <span className={theme === "light" ? "bar Applight" : "bar Appdark"}></span>
+        <h2 className={theme === "light" ? "title Applight" : "title Appdark"}>
+          Capítulos
+        </h2>
+        <span
+          className={theme === "light" ? "bar Applight" : "bar Appdark"}
+        ></span>
         {chapters.map((chapter, index) => (
           <div
             className={
