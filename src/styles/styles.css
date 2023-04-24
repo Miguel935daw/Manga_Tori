@@ -18,28 +18,80 @@
   }
   .center {
     top: 0px;
-    left: 700px;
+    left: 730px;
   }
   .left1 {
     top: 110px;
-    left: 597px;
+    left: 627px;
   }
   .left2 {
     top: 150px;
-    left: 518px;
+    left: 548px;
   }
   .right1 {
     top: 110px;
-    left: 930px;
+    left: 960px;
   }
   .right2 {
     top: 150px;
-    left: 1115px;
+    left: 1145px;
+  }
+  .sliderButton1 {
+    position: absolute;
+    top: 450px;
+    left: 400px;
+    z-index: 2;
+  }
+  
+  .sliderButton2 {
+    position: absolute;
+    top: 450px;
+    left: 2010px;
+  }
+  .paginadeSliderButton1 {
+    position: absolute;
+    top: 670px;
+    left: 475px;
+    z-index: 2;
+  }
+
+  .paginadeSliderButton2 {
+    position: absolute;
+    top: 670px;
+    left: 1930px;
+    z-index: 2;
+  }
+  .icon {
+    width: 10vh;
+    max-width: 5vh;
+    height: 5vh;
+    margin-top: 8px;
+  }
+  .message {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 18%;
+    min-height: 36%;
+    padding: 20px;
+    align-items: center;
+    text-align: justify;
+    color: #ff3633;
+    border-radius: 21px;
+    font-size: 1.5em;
+  }
+  .loginLogo {
+    width: 200px;
+    height: 200px;
   }
 }
 
 /* Pantallas 1080p */
-@media (min-width: 720px) and (max-width: 2559px) {
+@media (min-width: 1920px) and (max-width: 2559px) {
   .title {
     font-size: 1.5em;
   }
@@ -55,23 +107,72 @@
   }
   .center {
     top: 0px;
-    left: 444px;
+    left: 554px;
   }
   .left1 {
-    top: 60px;
-    left: 393px;
+    top: 90px;
+    left: 490px;
   }
   .left2 {
-    top: 90px;
-    left: 343px;
+    top: 130px;
+    left: 438px;
   }
   .right1 {
-    top: 60px;
-    left: 579px;
+    top: 90px;
+    left: 729px;
   }
   .right2 {
-    top: 90px;
-    left: 695px;
+    top: 130px;
+    left: 865px;
+  }
+  .sliderButton1 {
+    position: absolute;
+    top: 367px;
+    left: 283px;
+    z-index: 2;
+  }
+
+  .sliderButton2 {
+    position: absolute;
+    top: 367px;
+    left: 1531px;
+  }
+  .paginadeSliderButton1 {
+    position: absolute;
+    top: 540px;
+    left: 390px;
+    z-index: 2;
+  }
+
+  .paginadeSliderButton2 {
+    position: absolute;
+    top: 540px;
+    left: 1440px;
+  }
+  .icon {
+    width: 10vh;
+    max-width: 5vh;
+    height: 5vh;
+    margin-top: 6px;
+  }
+  .loginLogo {
+    width: 108px;
+    height: 101.84px;
+  }
+  .message {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 350px;
+    padding: 20px;
+    align-items: center;
+    text-align: justify;
+    color: #ff3633;
+    border-radius: 21px;
   }
 }
 
@@ -149,6 +250,7 @@ ul {
 }
 
 li {
+  align-items: center;
   display: inline-flex;
   width: fit-content;
   max-width: 10%;
@@ -407,7 +509,7 @@ label > input[type="radio"] + * {
 .toggle-button {
   display: flex;
   align-items: center;
-  align-self: flex-end;
+  margin-top: 6px;
 }
 .toggle-button input[type="checkbox"] {
   display: none;
@@ -447,16 +549,16 @@ label > input[type="radio"] + * {
   background-color: #2195f300;
   border: 2px solid rgb(255, 255, 255);
 }
-#close{
+#close {
   width: 5%;
 }
-.close.Appdark{
+.close.Appdark {
   color: #2f2e5e;
 }
-.close.Appdark{
+.close.Appdark {
   color: white;
 }
-.suscribe{
+.suscribe {
   background-color: #ff3131;
   color: white;
   border-radius: 10px;
@@ -563,10 +665,7 @@ input {
   margin-top: 20px;
   margin-bottom: 30px;
 }
-.loginLogo {
-  width: 108px;
-  height: 101.84px;
-}
+
 
 .error {
   height: 120px;
@@ -618,21 +717,7 @@ input {
   display: none;
 }
 
-.message {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70%;
-  max-width: 350px;
-  padding: 20px;
-  align-items: center;
-  text-align: justify;
-  color: #FF3633;
-  border-radius: 21px;
-}
+
 .message.Appdark {
   background-color: #2f2e5e;
 }
@@ -695,18 +780,7 @@ input {
     height 0.5s ease-out, filter 0.5s ease-out, z-index 0.5s ease-out;
 }
 
-.sliderButton1 {
-  position: absolute;
-  top: 400px;
-  left: 250px;
-  z-index: 2;
-}
 
-.sliderButton2 {
-  position: absolute;
-  top: 400px;
-  left: 1200px;
-}
 .slide {
   left: 0px;
 }
@@ -735,8 +809,8 @@ input {
 }
 
 .sliderHome {
-  min-height: 80vh;
-  height: 80vh;
+  min-height: 50vh;
+  height: 50vh;
   width: 100%;
   display: flex;
   flex-direction: row;

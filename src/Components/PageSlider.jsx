@@ -70,7 +70,7 @@ function PageSlider() {
     >
       <img
         src="/images/previous.png"
-        className="sliderButton1"
+        className="paginadeSliderButton1"
         onClick={() => {
           selectedIndex != 0 ? previous() : "" 
         }}
@@ -99,7 +99,7 @@ function PageSlider() {
       </div>
       <img
         src="/images/next.png"
-        className="sliderButton2"
+        className="paginadeSliderButton2"
         onClick={() => {
           selectedIndex != pages.length-1 ? next() : "" 
           //grande()
