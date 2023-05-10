@@ -12,7 +12,7 @@ function NavBar() {
   const subcription = userSubscription == true ? "Suscriptor" : "No Suscriptor";
   if (userSession !== null) {
     return (
-      <nav className={theme === "light" ? "App light" : "App dark"}>
+      <nav className={theme === "light" ? "Applight" : "Appdark"}>
         <img
           src="/images/logo.png"
           alt="logo"
@@ -20,6 +20,26 @@ function NavBar() {
           onClick={() => navigate("/")}
         />
         <ul>
+          <li htmlFor="toggle" className="toggle-button">
+            {theme === "light" ? (
+              <>
+                <img src="/images/DarkTheme.png" alt="Tema" id="icon" />
+                <input type="checkbox" id="toggle" />
+              </>
+            ) : (
+              <>
+                <img src="/images/LightTheme.png" alt="Tema" id="icon" />
+                <input type="checkbox" id="toggle" checked="true" />
+              </>
+            )}
+
+            <span
+              className="slider"
+              onClick={() => {
+                document.getElementById("toggle").click(), toggleTheme();
+              }}
+            ></span>
+          </li>
           <li>
             <a>{subcription}</a>
           </li>

@@ -3,12 +3,43 @@ import { useManga } from "../Context/MangaContext";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../Context/ThemeContext";
 import { useAuth } from "../Context/UserContext";
+import supabase from "../supabase/client";
 function MangaChapterList() {
   //Importo los estados y setter necesarios
-  const { mangaSelected, setMangaSelected, selectChapter } = useManga();
+  const { mangaSelected, setMangaSelected, selectChapter } =
+    useManga();
   const { userSession, userSubscription } = useAuth();
   const navigate = useNavigate();
   const { theme } = useTheme();
+  const [readingProgress, setReadingProgress] = useState(null)
+  useEffect(() => {
+    async function fetchReadingProgress() {
+      let { data: Lectura, error } = await supabase
+        .from("Lectura")
+        .select("Capitulos_Leidos")
+        .eq("Manga_ID", mangaSelected.Manga_ID)
+        .eq("User_ID", userSession.id);
+      if (error) {
+        console.log(error);
+      } else {
+        setReadingProgress(Lectura);
+      }
+    }
+    if (userSession) {
+      fetchReadingProgress();
+    }
+  },[mangaSelected]);
+
+  useEffect(() => {
+    async function updateReadingProgress() {
+      const { data, error } = await supabase
+        .from("Lectura")
+        .update({ Capitulos_Leidos: readingProgress })
+        .eq("Manga_ID", mangaSelected.Manga_ID)
+        .eq("User_ID", userSession.id);
+    }
+    updateReadingProgress();
+  }, [readingProgress]);
   //Función para hacer que aparezca el popUp
   const popUp = (chapter) => {
     if (userSubscription !== true || userSession === null) {
@@ -17,8 +48,37 @@ function MangaChapterList() {
         document.getElementById("overlay").style.display = "none";
       });
     } else {
+      makeProgress(chapter);
       selectChapter(chapter);
       navigate("/Chapter");
+    }
+  };
+  const progress = (chapter) => {
+    if (userSession) {
+      if (readingProgress) {
+        if (readingProgress.includes(chapter)) {
+          return "/images/visto.png";
+        } else {
+          return "/images/novisto.png";
+        }
+      } else {
+        return "/images/novisto.png";
+      }
+    }
+  };
+  const makeProgress = async (chapter) => {
+    if (userSession) {
+      if (readingProgress) {
+        readingProgress.push(chapter);
+      } else {
+        const { data, error } = await supabase.from("Lectura").insert([
+          {
+            User_ID: userSession.id,
+            Manga_ID: mangaSelected.Manga_ID,
+            Capitulos_leidos: [chapter],
+          },
+        ]);
+      }
     }
   };
   //Use Effect para guardar el manga seleccionado en el localStorage
@@ -52,7 +112,9 @@ function MangaChapterList() {
               theme === "light" ? "message Applight" : "message Appdark"
             }
           >
-            <div style={{justifyContent:"end", display: "flex", width: "100%"}}>
+            <div
+              style={{ justifyContent: "end", display: "flex", width: "100%" }}
+            >
               <img src="/images/close.png" alt="cerrar" id="close" />
             </div>
             <img src="/images/logo.png" alt="logo" className="loginLogo" />
@@ -82,13 +144,14 @@ function MangaChapterList() {
               index >= 5
                 ? () => popUp(chapter)
                 : () => {
+                    makeProgress(chapter);
                     selectChapter(chapter);
                     navigate("/Chapter");
                   }
             }
           >
             <p className="chapterNumber">Capítulo {chapter}</p>
-            <img src="/images/novisto.png" alt="" className="view" />
+            <img src={progress(chapter)} alt="" className="view" />
           </div>
         ))}
       </div>
