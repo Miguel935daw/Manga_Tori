@@ -6,13 +6,27 @@ import { useAuth } from "../Context/UserContext";
 import supabase from "../supabase/client";
 function MangaChapterList() {
   //Importo los estados y setter necesarios
-  const { mangaSelected, setMangaSelected, selectChapter } =
-    useManga();
+  const { mangaSelected, setMangaSelected, selectChapter } = useManga();
   const { userSession, userSubscription } = useAuth();
   const navigate = useNavigate();
   const { theme } = useTheme();
-  const [readingProgress, setReadingProgress] = useState(null)
+  const [userProgress, setUserProgress] = useState(false);
+  const [readingProgress, setReadingProgress] = useState([]);
   useEffect(() => {
+    async function fetchMangaReading() {
+      let { data, error } = await supabase
+        .from("Lectura")
+        .select("*")
+        .eq("Manga_ID", mangaSelected.Manga_ID)
+        .eq("User_ID", userSession.id);
+      if (error) {
+        console.log(error);
+      } else {
+        if (data.length != 0) {
+          setUserProgress(true);
+        }
+      }
+    }
     async function fetchReadingProgress() {
       let { data: Lectura, error } = await supabase
         .from("Lectura")
@@ -22,24 +36,30 @@ function MangaChapterList() {
       if (error) {
         console.log(error);
       } else {
-        setReadingProgress(Lectura);
+        if (Lectura.length != 0) {
+          setReadingProgress(Lectura[0].Capitulos_Leidos);
+        }
       }
     }
     if (userSession) {
+      fetchMangaReading();
       fetchReadingProgress();
     }
-  },[mangaSelected]);
+  }, [mangaSelected]);
 
-  useEffect(() => {
-    async function updateReadingProgress() {
-      const { data, error } = await supabase
-        .from("Lectura")
-        .update({ Capitulos_Leidos: readingProgress })
-        .eq("Manga_ID", mangaSelected.Manga_ID)
-        .eq("User_ID", userSession.id);
+  async function updateReadingProgress() {
+    console.log(readingProgress);
+    const { data, error } = await supabase
+      .from("Lectura")
+      .update({ Capitulos_Leidos: readingProgress })
+      .eq("Manga_ID", mangaSelected.Manga_ID)
+      .eq("User_ID", userSession.id);
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Actualizado");
     }
-    updateReadingProgress();
-  }, [readingProgress]);
+  }
   //Función para hacer que aparezca el popUp
   const popUp = (chapter) => {
     if (userSubscription !== true || userSession === null) {
@@ -48,9 +68,12 @@ function MangaChapterList() {
         document.getElementById("overlay").style.display = "none";
       });
     } else {
-      makeProgress(chapter);
-      selectChapter(chapter);
-      navigate("/Chapter");
+      async () => {
+        await makeProgress(chapter);
+        updateReadingProgress();
+        selectChapter(chapter);
+        navigate("/Chapter");
+      };
     }
   };
   const progress = (chapter) => {
@@ -68,16 +91,23 @@ function MangaChapterList() {
   };
   const makeProgress = async (chapter) => {
     if (userSession) {
-      if (readingProgress) {
+      if (userProgress) {
         readingProgress.push(chapter);
       } else {
         const { data, error } = await supabase.from("Lectura").insert([
           {
             User_ID: userSession.id,
             Manga_ID: mangaSelected.Manga_ID,
-            Capitulos_leidos: [chapter],
+            Capitulos_Leidos: [chapter],
           },
         ]);
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("insertado");
+          readingProgress.push(chapter);
+          console.log(readingProgress);
+        }
       }
     }
   };
@@ -143,8 +173,9 @@ function MangaChapterList() {
             onClick={
               index >= 5
                 ? () => popUp(chapter)
-                : () => {
-                    makeProgress(chapter);
+                : async () => {
+                    await makeProgress(chapter);
+                    updateReadingProgress();
                     selectChapter(chapter);
                     navigate("/Chapter");
                   }

@@ -20,6 +20,8 @@ function Login() {
       if (error) {
         document.getElementById("error").innerText =
           "Credenciales de inicio de sesión inválidas";
+      }else{
+        navigate("/")
       }
     } catch (error) {
       console.log(error);

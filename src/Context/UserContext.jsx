@@ -13,7 +13,6 @@ export function UserContextProvider({ children }) {
     setUserSession(data?.user ?? null);
     //Función para guardar el estado de la suscripción del usuario en el estado userSubscription
     const getUserSubscription = async (userId) => {
-      console.log("Hola")
       const { data: Suscrito, error } = await supabase
         .from("Usuarios")
         .select("Suscrito")
@@ -22,7 +21,6 @@ export function UserContextProvider({ children }) {
       if (error) {
         console.log(error);
       } else {
-        console.log(Suscrito[0].Suscrito)
         setUserSubscription(Suscrito[0].Suscrito);
       }
     };
@@ -31,7 +29,11 @@ export function UserContextProvider({ children }) {
       async (event, session) => {
         setUserSession(session?.user ?? null);
         session.user!==null ? getUserSubscription(session.user.id) : setUserSubscription(false)
-        navigate("/");
+        console.log(event)
+         if (event === 'SIGNED_OUT') {
+          // El usuario ha cerrado sesión, redirigir a la página de inicio
+          navigate("/")
+        }
       }
     );
   }, []);
