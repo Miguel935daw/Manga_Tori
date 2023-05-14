@@ -42,7 +42,7 @@
     left: 400px;
     z-index: 2;
   }
-  
+
   .sliderButton2 {
     position: absolute;
     top: 450px;
@@ -476,8 +476,28 @@ label > input[type="radio"] + * {
   text-align: justify;
   margin-top: 0px;
 }
+.actions {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
 .view {
+  margin-right: 10px;
+  width: 34px;
+  height: 30px;
+}
+.download {
   margin-right: 37px;
+  width: 34px;
+  height: 30px;
+}
+.downloadMessage {
+  transition: opacity 1s ease-out;
+  color: red;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.5em;
+  opacity: 0;
 }
 .page {
   width: 100%;
@@ -666,7 +686,6 @@ input {
   margin-bottom: 30px;
 }
 
-
 .error {
   height: 120px;
   text-align: center !important;
@@ -716,7 +735,6 @@ input {
   z-index: 999;
   display: none;
 }
-
 
 .message.Appdark {
   background-color: #2f2e5e;
@@ -779,7 +797,6 @@ input {
   transition: top 0.5s ease-out, left 0.5s ease-out, width 0.5s ease-out,
     height 0.5s ease-out, filter 0.5s ease-out, z-index 0.5s ease-out;
 }
-
 
 .slide {
   left: 0px;

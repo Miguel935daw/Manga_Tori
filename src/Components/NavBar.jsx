@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import supabase from "../supabase/client";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/UserContext";
@@ -7,9 +8,27 @@ import { useTheme } from "../Context/ThemeContext";
 import "../styles/styles.css";
 function NavBar() {
   const { userSession, userSubscription } = useAuth();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, setTheme } = useTheme();
   const navigate = useNavigate();
   const subcription = userSubscription == true ? "Suscriptor" : "No Suscriptor";
+
+  //Use Effect para guardar el manga seleccionado en el localStorage
+  useEffect(() => {
+    if (theme) {
+      localStorage.setItem("theme", JSON.stringify(theme));
+    }
+  }, [theme]);
+
+  //UseEffect para almacenar el manga actual en localStorage
+  useEffect(() => {
+    const storedState = localStorage.getItem("theme");
+    if (storedState) {
+      setTheme(JSON.parse(storedState));
+    } else {
+      setTheme("light");
+    }
+  }, [setTheme]);
+
   if (userSession !== null) {
     return (
       <nav className={theme === "light" ? "Applight" : "Appdark"}>
@@ -29,7 +48,7 @@ function NavBar() {
             ) : (
               <>
                 <img src="/images/LightTheme.png" alt="Tema" id="icon" />
-                <input type="checkbox" id="toggle" checked="true" />
+                <input type="checkbox" id="toggle" />
               </>
             )}
 
@@ -47,7 +66,10 @@ function NavBar() {
             <a onClick={() => navigate("/Biblioteca")}>Biblioteca</a>
           </li>
           <li>
-            <a onClick={() => supabase.auth.signOut()}>Cerrar Sesión</a>
+            <a onClick={() => {
+              supabase.auth.signOut()
+              navigate("/")
+            }}>Cerrar Sesión</a>
           </li>
         </ul>
       </nav>
@@ -72,14 +94,14 @@ function NavBar() {
           ) : (
             <>
               <img src="/images/LightTheme.png" alt="Tema" id="icon" />
-              <input type="checkbox" id="toggle" checked="true" />
+              <input type="checkbox" id="toggle" />
             </>
           )}
 
           <span
             className="slider"
             onClick={() => {
-              document.getElementById("toggle").click(), toggleTheme();
+              document.getElementById("toggle").click(), toggleTheme()
             }}
           ></span>
         </li>

@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import JSZip from "jszip";
 import { useManga } from "../Context/MangaContext";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../Context/ThemeContext";
@@ -10,43 +11,25 @@ function MangaChapterList() {
   const { userSession, userSubscription } = useAuth();
   const navigate = useNavigate();
   const { theme } = useTheme();
-  const [userProgress, setUserProgress] = useState(false);
+  //Estado para guardar el progreso de la lectura
   const [readingProgress, setReadingProgress] = useState([]);
-  useEffect(() => {
-    async function fetchMangaReading() {
-      let { data, error } = await supabase
-        .from("Lectura")
-        .select("*")
-        .eq("Manga_ID", mangaSelected.Manga_ID)
-        .eq("User_ID", userSession.id);
-      if (error) {
-        console.log(error);
-      } else {
-        if (data.length != 0) {
-          setUserProgress(true);
-        }
-      }
-    }
-    async function fetchReadingProgress() {
-      let { data: Lectura, error } = await supabase
-        .from("Lectura")
-        .select("Capitulos_Leidos")
-        .eq("Manga_ID", mangaSelected.Manga_ID)
-        .eq("User_ID", userSession.id);
-      if (error) {
-        console.log(error);
-      } else {
-        if (Lectura.length != 0) {
-          setReadingProgress(Lectura[0].Capitulos_Leidos);
-        }
-      }
-    }
-    if (userSession) {
-      fetchMangaReading();
-      fetchReadingProgress();
-    }
-  }, [mangaSelected]);
 
+  //Función para consultar el progreso de lectura del usuario actual en el manga actual
+  async function fetchReadingProgress() {
+    let { data: Lectura, error } = await supabase
+      .from("Lectura")
+      .select("Capitulos_Leidos")
+      .eq("Manga_ID", mangaSelected.Manga_ID)
+      .eq("User_ID", userSession.id);
+    if (error) {
+      console.log(error);
+    } else {
+      if (Lectura.length != 0) {
+        setReadingProgress(Lectura[0].Capitulos_Leidos);
+      }
+    }
+  }
+  //Función para actualizar el campo Capitulos_Leidos de la tabla cada vez que se pincha en un capítulo y este no existe en el campo.
   async function updateReadingProgress() {
     console.log(readingProgress);
     const { data, error } = await supabase
@@ -68,14 +51,28 @@ function MangaChapterList() {
         document.getElementById("overlay").style.display = "none";
       });
     } else {
-      async () => {
+      (async () => {
         await makeProgress(chapter);
         updateReadingProgress();
         selectChapter(chapter);
         navigate("/Chapter");
-      };
+      })();
     }
   };
+
+  const downloadPopUp = (chapter, event) => {
+    if (userSubscription !== true || userSession === null) {
+      console.log("No hay sesión");
+      document.getElementById("overlay").style.display = "block";
+      document.getElementById("close").addEventListener("click", function () {
+      document.getElementById("overlay").style.display = "none";
+      });
+    } else {
+      download(chapter);
+    }
+    event.stopPropagation();
+  };
+  //Función simple para que aparezca el ojo relleno en caso de que este capitulo haya sido leido anteriormente o ojo sin relleno en caso contrario
   const progress = (chapter) => {
     if (userSession) {
       if (readingProgress) {
@@ -87,12 +84,17 @@ function MangaChapterList() {
       } else {
         return "/images/novisto.png";
       }
+    } else {
+      return "/images/novisto.png";
     }
   };
+  //Función para ir añadiendo al progreso de lectura los capitulos nuevos que está leyendo el usuario
   const makeProgress = async (chapter) => {
     if (userSession) {
-      if (userProgress) {
-        readingProgress.push(chapter);
+      if (readingProgress.length != 0) {
+        if (!readingProgress.includes(chapter)) {
+          readingProgress.push(chapter);
+        }
       } else {
         const { data, error } = await supabase.from("Lectura").insert([
           {
@@ -104,13 +106,57 @@ function MangaChapterList() {
         if (error) {
           console.log(error);
         } else {
-          console.log("insertado");
           readingProgress.push(chapter);
-          console.log(readingProgress);
         }
       }
     }
   };
+
+  async function download(chapter) {
+    // Obtener una lista de todos los objetos en la carpeta del bucket
+    const { data: objects, error } = await supabase.storage
+      .from("mangas")
+      .list(`${mangaSelected.Nombre}/${chapter}`);
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+    const zip = new JSZip();
+    // Recorrer la lista de objetos y descargarlos uno por uno
+    for (const object of objects) {
+      const { data, error } = await supabase.storage
+        .from(`mangas`)
+        .download(`${mangaSelected.Nombre}/${chapter}/${object.name}`);
+
+      if (error) {
+        console.error(error);
+        continue;
+      }
+      zip.file(object.name, data);
+    }
+    
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+      const downloadLink = document.createElement("a");
+      downloadLink.href = window.URL.createObjectURL(content);
+      downloadLink.download = `${mangaSelected.Nombre}-Capítulo${chapter}.zip`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      document.getElementById(chapter).style.color = "green"
+      document.getElementById(chapter).innerHTML = "Descarga Terminada"
+      document.getElementById(chapter).style.opacity = 0
+      document.getElementById(chapter).style.color = "red"
+    });
+  }
+
+  //UseEffect para que en caso el usuario haya iniciado sesión consultar el progreso
+  useEffect(() => {
+    if (userSession) {
+      fetchReadingProgress();
+    }
+  }, [mangaSelected]);
+
   //Use Effect para guardar el manga seleccionado en el localStorage
   useEffect(() => {
     if (mangaSelected) {
@@ -118,6 +164,7 @@ function MangaChapterList() {
     }
   }, [mangaSelected]);
 
+  //UseEffect para almacenar el manga actual en localStorage
   useEffect(() => {
     const storedState = localStorage.getItem("mangaSelected");
     if (storedState) {
@@ -166,23 +213,40 @@ function MangaChapterList() {
           className={theme === "light" ? "bar Applight" : "bar Appdark"}
         ></span>
         {chapters.map((chapter, index) => (
-          <div
-            className={
-              theme === "light" ? "chapter Applight" : "chapter Appdark"
-            }
-            onClick={
-              index >= 5
-                ? () => popUp(chapter)
-                : async () => {
-                    await makeProgress(chapter);
-                    updateReadingProgress();
-                    selectChapter(chapter);
-                    navigate("/Chapter");
+          <div style={{display: "flex", flexDirection: "row" }}>
+            <div
+              className={
+                theme === "light" ? "chapter Applight" : "chapter Appdark"
+              }
+              onClick={
+                index >= 5
+                  ? () => popUp(chapter)
+                  : async () => {
+                      await makeProgress(chapter);
+                      updateReadingProgress();
+                      selectChapter(chapter);
+                      navigate("/Chapter");
+                    }
+              }
+            >
+              <p className="chapterNumber">Capítulo {chapter}</p>
+              <div className="actions">
+                <img src={progress(chapter)} alt="" className="view" />
+                <img
+                  src="/images/download.png"
+                  alt=""
+                  className="download"
+                  onClick={(event) => {
+                    document.getElementById(chapter).innerHTML = "Descarga Comenzada"
+                    document.getElementById(chapter).style.opacity = 1
+                    downloadPopUp(chapter, event)}
                   }
-            }
-          >
-            <p className="chapterNumber">Capítulo {chapter}</p>
-            <img src={progress(chapter)} alt="" className="view" />
+                />
+              </div>
+            </div>
+            <div>
+              <p id={chapter} className="downloadMessage"></p>
+            </div>
           </div>
         ))}
       </div>
