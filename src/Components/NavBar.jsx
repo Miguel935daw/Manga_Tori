@@ -43,19 +43,17 @@ function NavBar() {
             {theme === "light" ? (
               <>
                 <img src="/images/DarkTheme.png" alt="Tema" id="icon" />
-                <input type="checkbox" id="toggle" />
               </>
             ) : (
               <>
                 <img src="/images/LightTheme.png" alt="Tema" id="icon" />
-                <input type="checkbox" id="toggle" />
               </>
             )}
 
             <span
-              className="slider"
+              className={theme === "light" ? "slider Applight" : "slider Appdark"}
               onClick={() => {
-                document.getElementById("toggle").click(), toggleTheme();
+                 toggleTheme();
               }}
             ></span>
           </li>
@@ -89,19 +87,17 @@ function NavBar() {
           {theme === "light" ? (
             <>
               <img src="/images/DarkTheme.png" alt="Tema" id="icon" />
-              <input type="checkbox" id="toggle" />
             </>
           ) : (
             <>
               <img src="/images/LightTheme.png" alt="Tema" id="icon" />
-              <input type="checkbox" id="toggle" />
             </>
           )}
 
           <span
-            className="slider"
+            className={theme === "light" ? "slider Applight" : "slider Appdark"}
             onClick={() => {
-              document.getElementById("toggle").click(), toggleTheme()
+               toggleTheme()
             }}
           ></span>
         </li>

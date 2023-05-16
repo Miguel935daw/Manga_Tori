@@ -10,8 +10,7 @@ export function MangaContextProvider({ children }) {
   const [mangaSelected, setMangaSelected] = useState(null);
   const [chapterSelected, setChapterSelected] = useState(null);
   const [mangasOfTheMoment, setMangasOfTheMoment] = useState(null);
-  const [readingProgress, setReadingProgress] = useState(null);
-
+  
   //Función anónima para cambiar el estado de gender desde fuera del contexto
   const changeGender = function (newGender) {
     setGender(newGender);

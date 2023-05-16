@@ -39,7 +39,6 @@ function MangaList() {
                     src={manga.Portada}
                     className="manga"
                     onClick={() => {
-                      console.log(manga);
                       selectManga(manga);
                       navigate("/Manga");
                       window.scrollTo(0, 0);

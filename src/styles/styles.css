@@ -498,6 +498,13 @@ label > input[type="radio"] + * {
   font-weight: 400;
   font-size: 1.5em;
   opacity: 0;
+  margin: 0px;
+}
+.progressBar {
+  display: block;
+  background-color: #ff3131;
+  height: 10px;
+  width: 0%;
 }
 .page {
   width: 100%;
@@ -547,7 +554,7 @@ label > input[type="radio"] + * {
   margin-left: 10px;
 }
 
-.toggle-button .slider:before {
+.toggle-button .slider::before {
   background-color: rgb(0, 0, 0);
   border-radius: 50%;
   content: "";
@@ -560,12 +567,14 @@ label > input[type="radio"] + * {
 }
 
 /* Cambio de apariencia cuando está activado */
-.toggle-button input[type="checkbox"]:checked + .slider:before {
+.toggle-button .slider.Appdark::before {
   transform: translateX(20px);
   background-color: rgb(255, 255, 255);
 }
-
-.toggle-button input[type="checkbox"]:checked + .slider {
+.toggle-button .slider.Appdark {
+  border: 2px solid rgb(255, 255, 255);
+}
+.toggle-button .slider.Appligth {
   background-color: #2195f300;
   border: 2px solid rgb(255, 255, 255);
 }

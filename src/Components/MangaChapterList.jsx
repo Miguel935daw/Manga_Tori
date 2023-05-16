@@ -13,7 +13,6 @@ function MangaChapterList() {
   const { theme } = useTheme();
   //Estado para guardar el progreso de la lectura
   const [readingProgress, setReadingProgress] = useState([]);
-
   //Función para consultar el progreso de lectura del usuario actual en el manga actual
   async function fetchReadingProgress() {
     let { data: Lectura, error } = await supabase
@@ -65,7 +64,7 @@ function MangaChapterList() {
       console.log("No hay sesión");
       document.getElementById("overlay").style.display = "block";
       document.getElementById("close").addEventListener("click", function () {
-      document.getElementById("overlay").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
       });
     } else {
       download(chapter);
@@ -92,6 +91,7 @@ function MangaChapterList() {
   const makeProgress = async (chapter) => {
     if (userSession) {
       if (readingProgress.length != 0) {
+        console.log(readingProgress);
         if (!readingProgress.includes(chapter)) {
           readingProgress.push(chapter);
         }
@@ -123,6 +123,10 @@ function MangaChapterList() {
       return;
     }
     const zip = new JSZip();
+    let percent = 100 / objects.length;
+    let contador = 1;
+    document.getElementById(`container-${chapter}`).style.display = "block";
+
     // Recorrer la lista de objetos y descargarlos uno por uno
     for (const object of objects) {
       const { data, error } = await supabase.storage
@@ -132,10 +136,15 @@ function MangaChapterList() {
       if (error) {
         console.error(error);
         continue;
+      } else {
+        document.getElementById(`progress-${chapter}`).style.width = `${
+          percent * contador
+        }%`;
+        contador++;
       }
       zip.file(object.name, data);
     }
-    
+
     zip.generateAsync({ type: "blob" }).then(function (content) {
       const downloadLink = document.createElement("a");
       downloadLink.href = window.URL.createObjectURL(content);
@@ -143,11 +152,13 @@ function MangaChapterList() {
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
-      document.getElementById(chapter).style.color = "green"
-      document.getElementById(chapter).innerHTML = "Descarga Terminada"
-      document.getElementById(chapter).style.opacity = 0
-      document.getElementById(chapter).style.color = "red"
+      document.getElementById(chapter).style.color = "green";
+      document.getElementById(chapter).innerHTML = "Descarga Terminada";
+      document.getElementById(`container-${chapter}`).style.display = "none";
+      document.getElementById(chapter).style.opacity = 0;
+      document.getElementById(chapter).style.color = "red";
     });
+    
   }
 
   //UseEffect para que en caso el usuario haya iniciado sesión consultar el progreso
@@ -164,13 +175,28 @@ function MangaChapterList() {
     }
   }, [mangaSelected]);
 
-  //UseEffect para almacenar el manga actual en localStorage
+  //UseEffect para en caso de que exista el campo mangaSelected en localStorage seleccionar ese manga
   useEffect(() => {
     const storedState = localStorage.getItem("mangaSelected");
     if (storedState) {
       setMangaSelected(JSON.parse(storedState));
     }
   }, [setMangaSelected]);
+
+  //Use Effect para guardar el manga seleccionado en el localStorage
+  useEffect(() => {
+    if (readingProgress.length != 0) {
+      localStorage.setItem("readingProgress", JSON.stringify(readingProgress));
+    }
+  }, [readingProgress]);
+
+  //UseEffect para en caso de que exista el campo readingProgress en localStorage seleccionar ese progreso
+  useEffect(() => {
+    const storedState = localStorage.getItem("readingProgress");
+    if (storedState) {
+      setReadingProgress(JSON.parse(storedState));
+    }
+  }, [setReadingProgress]);
 
   if (!mangaSelected) {
     return (
@@ -213,7 +239,7 @@ function MangaChapterList() {
           className={theme === "light" ? "bar Applight" : "bar Appdark"}
         ></span>
         {chapters.map((chapter, index) => (
-          <div style={{display: "flex", flexDirection: "row" }}>
+          <div style={{ display: "flex", flexDirection: "row" }}>
             <div
               className={
                 theme === "light" ? "chapter Applight" : "chapter Appdark"
@@ -237,15 +263,39 @@ function MangaChapterList() {
                   alt=""
                   className="download"
                   onClick={(event) => {
-                    document.getElementById(chapter).innerHTML = "Descarga Comenzada"
-                    document.getElementById(chapter).style.opacity = 1
-                    downloadPopUp(chapter, event)}
-                  }
+                    document.getElementById(chapter).innerHTML =
+                      "Descarga Comenzada";
+                    document.getElementById(chapter).style.opacity = 1;
+                    downloadPopUp(chapter, event);
+                  }}
                 />
               </div>
             </div>
-            <div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "20%",
+                alignItems: "center",
+                justifyContent: "left",
+                gap: "10px"
+              }}
+            >
               <p id={chapter} className="downloadMessage"></p>
+              <div
+                style={{
+                  width: "50%",
+                  height:"fit-content",
+                  border: "2px solid black",
+                  display: "none" 
+                }}
+                id={"container-" + chapter}
+              >
+                <span
+                  className="progressBar"
+                  id={"progress-" + chapter}
+                ></span>
+              </div>
             </div>
           </div>
         ))}
