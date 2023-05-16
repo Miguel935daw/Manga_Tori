@@ -1,15 +1,27 @@
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { useManga } from "../Context/MangaContext";
 import { useTheme } from "../Context/ThemeContext";
-
+import supabase from "../supabase/client";
 function Slider() {
-  const { mangaSelected } = useManga();
+  const { selectManga } = useManga();
   const { theme } = useTheme();
+  const [mangasSlider, setMangasSlider] = useState()
+  const navigate = useNavigate();
   const images = [
     "/images/slider1.png",
     "/images/slider2.png",
     "/images/slider3.png",
   ];
+  (async () => {
+    const { data, error } = await supabase.from("Mangas").select("*").in("Manga_ID", [9,12,4]).order("Manga_ID", { ascending: true});
+    if (error) {
+      console.log(error);
+    } else {
+      setMangasSlider(data);
+    }
+  })();
+
   const [selectedIndex, setSelectedIndex] = useState(0);
   const mostrar = (index) => {
     if (index == selectedIndex) {
@@ -25,10 +37,19 @@ function Slider() {
     }
   };
   const previous = () => {
-    setSelectedIndex(selectedIndex-1)
+    setSelectedIndex(selectedIndex - 1);
   };
   const next = () => {
-    setSelectedIndex(selectedIndex + 1)
+    setSelectedIndex(selectedIndex + 1);
+  };
+  const sliderNavegation = (index)=>{
+    if(index==0){
+      selectManga(mangasSlider[1])
+    }else if(index==1){
+      selectManga(mangasSlider[2])
+    }else{
+      selectManga(mangasSlider[0])
+    }
   };
   const backGround = () => {
     if (selectedIndex == 0) {
@@ -72,6 +93,11 @@ function Slider() {
             alt=""
             style={{ width: "100%", height: "100%", position: "absolute" }}
             className={mostrar(images.indexOf(image))}
+            onClick={() => {
+              sliderNavegation(images.indexOf(image))
+              navigate("/Manga");
+              window.scrollTo(0, 0);
+            }}
           />
         ))}
       </div>
