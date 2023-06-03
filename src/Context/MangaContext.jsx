@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { useAuth } from "./UserContext";
 import supabase from "../supabase/client";
 
 export const MangaContext = createContext();
@@ -10,7 +9,7 @@ export function MangaContextProvider({ children }) {
   const [mangaSelected, setMangaSelected] = useState(null);
   const [chapterSelected, setChapterSelected] = useState(null);
   const [mangasOfTheMoment, setMangasOfTheMoment] = useState(null);
-  
+
   //Función anónima para cambiar el estado de gender desde fuera del contexto
   const changeGender = function (newGender) {
     setGender(newGender);
@@ -38,6 +37,19 @@ export function MangaContextProvider({ children }) {
       console.log(error);
     }
   }
+  const getUserMangaList = async (userId) => {
+    const { data: [Nombre, Mangas] } = await supabase
+      .from("Lista")
+      .select("Nombre, Mangas")
+      .eq("User_ID", userId);
+
+    if (error) {
+      console.log(error);
+    } else {
+      console.log([Nombre,Mangas])
+      setUserMangaList([Nombre,Mangas])
+    }
+  };
   useEffect(() => {
     async function fetchMangas() {
       if (gender == "Todos") {

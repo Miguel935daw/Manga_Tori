@@ -7,6 +7,7 @@ export const UserContext = createContext(null);
 export function UserContextProvider({ children }) {
   const [userSession, setUserSession] = useState(null);
   const [userSubscription, setUserSubscription] = useState(null);
+  const [userMangaList, setUserMangaList] = useState([])
   const navigate = useNavigate();
   useEffect(() => {
     const { data, error } = async () => await supabase.auth.getSession();
@@ -24,23 +25,27 @@ export function UserContextProvider({ children }) {
         setUserSubscription(Suscrito[0].Suscrito);
       }
     };
+    
     //En caso de que cambie la sesión se redirige al usuario al inicio
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         setUserSession(session?.user ?? null);
         session.user!==null ? getUserSubscription(session.user.id) : setUserSubscription(false)
-        console.log(event)
          if (event === 'SIGNED_OUT') {
           // El usuario ha cerrado sesión, redirigir a la página de inicio
           navigate("/")
         }
       }
     );
+      
+
   }, []);
 
   const value = {
     userSession,
     userSubscription,
+    userMangaList,
+    setUserMangaList
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }

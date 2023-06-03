@@ -10,7 +10,6 @@ function NavBar() {
   const { userSession, userSubscription } = useAuth();
   const { theme, toggleTheme, setTheme } = useTheme();
   const navigate = useNavigate();
-  const subcription = userSubscription == true ? "Suscriptor" : "No Suscriptor";
 
   //Use Effect para guardar el manga seleccionado en el localStorage
   useEffect(() => {
@@ -51,23 +50,36 @@ function NavBar() {
             )}
 
             <span
-              className={theme === "light" ? "slider Applight" : "slider Appdark"}
+              className={
+                theme === "light" ? "slider Applight" : "slider Appdark"
+              }
               onClick={() => {
-                 toggleTheme();
+                toggleTheme();
               }}
             ></span>
           </li>
+          {userSubscription ? (
+            <li>
+              <a onClick={() => navigate("/Listas")}>Mis Listas</a>
+            </li>
+          ) : (
+            ""
+          )}
           <li>
-            <a>{subcription}</a>
+            <a onClick={() => navigate("/Suscripcion")}>Suscripcion</a>
           </li>
           <li>
             <a onClick={() => navigate("/Biblioteca")}>Biblioteca</a>
           </li>
           <li>
-            <a onClick={() => {
-              supabase.auth.signOut()
-              navigate("/")
-            }}>Cerrar Sesión</a>
+            <a
+              onClick={() => {
+                supabase.auth.signOut();
+                navigate("/");
+              }}
+            >
+              Cerrar Sesión
+            </a>
           </li>
         </ul>
       </nav>
@@ -97,7 +109,7 @@ function NavBar() {
           <span
             className={theme === "light" ? "slider Applight" : "slider Appdark"}
             onClick={() => {
-               toggleTheme()
+              toggleTheme();
             }}
           ></span>
         </li>

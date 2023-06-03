@@ -2,7 +2,7 @@ import { MangaContextProvider } from "../Context/MangaContext";
 import NavBar from "./NavBar";
 import MangaList from "./MangaList";
 
-function Biblioteca() {
+function Library() {
   return (
     <>
       <NavBar />
@@ -11,4 +11,4 @@ function Biblioteca() {
   );
 }
 
-export default Biblioteca;
+export default  Library;

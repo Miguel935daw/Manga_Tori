@@ -51,6 +51,9 @@ function MangaList() {
                   >
                     {manga.Nombre}
                   </h2>
+                  <button className={
+                      theme === "light" ? "addlist Applight" : "addlist Appdark"
+                    }>Añadir a una lista</button>
                 </div>
               ))}
             </div>

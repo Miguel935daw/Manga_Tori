@@ -7,6 +7,9 @@
 
 /* Pantallas 1440p */
 @media (min-width: 2560px) and (max-width: 3839px) {
+  .titleList {
+    font-size: 2em;
+  }
   .title {
     font-size: 2em;
   }
@@ -67,6 +70,22 @@
     height: 5vh;
     margin-top: 8px;
   }
+  .createListMessage {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 350px;
+    padding: 20px;
+    align-items: center;
+    text-align: justify;
+    color: #ff3633;
+    border-radius: 21px;
+  }
+  
   .message {
     display: flex;
     flex-direction: column;
@@ -92,6 +111,9 @@
 
 /* Pantallas 1080p */
 @media (min-width: 1920px) and (max-width: 2559px) {
+  .titleList {
+    font-size: 1.5em;
+  }
   .title {
     font-size: 1.5em;
   }
@@ -159,6 +181,21 @@
     width: 108px;
     height: 101.84px;
   }
+  .createListMessage {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 350px;
+    padding: 20px;
+    align-items: center;
+    text-align: justify;
+    color: #ff3633;
+    border-radius: 21px;
+  }
   .message {
     display: flex;
     flex-direction: column;
@@ -225,10 +262,32 @@ h1 {
   margin: 0px;
   margin-bottom: 5px;
 }
+.addlist{
+  width: 80%;
+  margin-top: 20px;
+}
+.addlist.Appdark{
+  color:#ffffff;
+  background-color: #2f2e5e;
+}
+.addlist.Applight{
+  color:#ff3131;
+  background-color: #ffffff;
+}
+.titleList {
+  font-style: normal;
+  font-weight: 400;
+}
 .title {
   margin-bottom: auto;
   font-style: normal;
   font-weight: 400;
+}
+.titleList.Appdark {
+  color: #ffffff;
+}
+.titleList.Applight {
+  color: #ff3131;
 }
 .title.Appdark {
   color: #ffffff;
@@ -745,6 +804,9 @@ input {
   display: none;
 }
 
+.createListMessage.Appdark{
+  background-color: #2f2e5e;
+}
 .message.Appdark {
   background-color: #2f2e5e;
 }
