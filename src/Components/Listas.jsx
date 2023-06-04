@@ -1,12 +1,13 @@
-import { MangaContextProvider } from "../Context/MangaContext";
 import NavBar from "./NavBar";
 import Lists from "./Lists";
+import ListCreator from "./ListCreator";
 
 function Listas() {
   return (
     <>
       <NavBar />
       <Lists />
+      
     </>
   );
 }

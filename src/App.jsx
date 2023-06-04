@@ -9,6 +9,7 @@ import "./App.css";
 import MangaSection from "./Components/MangaSection";
 import View from "./Components/View";
 import Listas from "./Components/Listas";
+import UserList from "./Components/UserList"
 import { createContext, useContext } from "react";
 
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/Manga" element={<MangaSection />} />
           <Route path="/Chapter" element={<View />} />
           <Route path="/Listas" element={<Listas />} />
+          <Route path="/Lista" element={<UserList />} />
         </Routes>
       </main>
     

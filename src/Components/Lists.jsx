@@ -2,36 +2,21 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../Context/ThemeContext";
 import { useAuth } from "../Context/UserContext";
-import  ListCreator  from "./ListCreator";
-import supabase from "../supabase/client";
+import ListCreator from "./ListCreator";
+import { useManga } from "../Context/MangaContext";
+
 function Lists() {
-  const { userSession, userSubscription } = useAuth();
-  const [userMangaList, setUserMangaList] = useState([])
+  const { selectUserList } = useManga();
+  const { userMangaList } = useAuth();
   const navigate = useNavigate();
-  useEffect(() => {getUserMangaList(userSession.id)}, []);
-
   const { theme } = useTheme();
-  const getUserMangaList = async (userId) => {
-    const { data, error } = await supabase
-      .from("Lista")
-      .select("Nombre, Mangas")
-      .eq("User_ID", userId);
-
-    if (error) {
-      console.log(error);
-    } else {
-      setUserMangaList(data)
-    }
-  };
-  
   if (!userMangaList) {
     return (
-      <>
+      <div className={theme === "light" ? "Applight" : "Appdark"}>
         <p>Cargando...</p>
-      </>
+      </div>
     );
   }
-
   return (
     <div
       className={theme === "light" ? "mangaList Applight" : "mangaList Appdark"}
@@ -39,7 +24,7 @@ function Lists() {
       <div className="mangas">
         {userMangaList
           .reduce((acc, lista, index) => {
-            if (index % 4 === 0) {
+            if (index % 3 === 0) {
               acc.push([]);
             }
             acc[acc.length - 1].push(lista);
@@ -48,28 +33,40 @@ function Lists() {
           .map((listaGroup) => (
             <div className="section">
               {listaGroup.map((lista) => (
-                <div>
+                <div
+                  onClick={() => {
+                    //Llevar a página de la lista
+                    selectUserList(lista);
+                    navigate("/Lista");
+                    window.scrollTo(0, 0);
+                  }}
+                >
                   {lista.Mangas.length != 0 ? (
-                    <img
-                      src={lista.Mangas[0].Portada}
-                      className="manga"
-                      onClick={() => {
-                        //Llevar a página de la lista
-                        window.scrollTo(0, 0);
-                      }}
-                    />
+                    <img src={lista.Mangas[0].Portada} className="manga" />
                   ) : (
-                    <div style={{width: "100%", height: "100%", border: "solid", justifyContent: "center", display: "flex", alignItems: "center", marginLeft: "0px"}}>
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        border: "solid",
+                        justifyContent: "center",
+                        display: "flex",
+                        alignItems: "center",
+                        marginLeft: "0px",
+                      }}
+                    >
                       <h2
                         className={
-                          theme === "light" ? "titleList Applight" : "titleList Appdark"
+                          theme === "light"
+                            ? "titleList Applight"
+                            : "titleList Appdark"
                         }
                       >
                         Sin Mangas
                       </h2>
                     </div>
                   )}
-                  
+
                   <h2
                     className={
                       theme === "light" ? "title Applight" : "title Appdark"

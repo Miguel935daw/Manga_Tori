@@ -9,6 +9,7 @@ export function MangaContextProvider({ children }) {
   const [mangaSelected, setMangaSelected] = useState(null);
   const [chapterSelected, setChapterSelected] = useState(null);
   const [mangasOfTheMoment, setMangasOfTheMoment] = useState(null);
+  const [UserListSelected, setUserListSelected] = useState(null)
 
   //Función anónima para cambiar el estado de gender desde fuera del contexto
   const changeGender = function (newGender) {
@@ -23,6 +24,10 @@ export function MangaContextProvider({ children }) {
   const selectChapter = function (chapter) {
     setChapterSelected(chapter);
   };
+
+  const selectUserList = function (userList) {
+    setUserListSelected(userList);
+  }
   async function updateVisits(manga) {
     const { data } = await supabase
       .from("Mangas")
@@ -36,20 +41,7 @@ export function MangaContextProvider({ children }) {
     if (error) {
       console.log(error);
     }
-  }
-  const getUserMangaList = async (userId) => {
-    const { data: [Nombre, Mangas] } = await supabase
-      .from("Lista")
-      .select("Nombre, Mangas")
-      .eq("User_ID", userId);
-
-    if (error) {
-      console.log(error);
-    } else {
-      console.log([Nombre,Mangas])
-      setUserMangaList([Nombre,Mangas])
-    }
-  };
+  } 
   useEffect(() => {
     async function fetchMangas() {
       if (gender == "Todos") {
@@ -99,6 +91,8 @@ export function MangaContextProvider({ children }) {
     changeGender,
     selectManga,
     selectChapter,
+    UserListSelected,
+    selectUserList
   };
   return (
     <MangaContext.Provider value={value}>{children}</MangaContext.Provider>

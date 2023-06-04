@@ -4,9 +4,7 @@ import { useTheme } from "../Context/ThemeContext";
 import { useAuth } from "../Context/UserContext";
 import supabase from "../supabase/client";
 function ListCreator() {
-  const { userSession } = useAuth();
-  
-
+  const { userSession, userMangaList, updateUserMangaList } = useAuth();
   const { theme } = useTheme();
   //Función para hacer que aparezca el popUp
   const popUp = () => {
@@ -35,10 +33,19 @@ function ListCreator() {
       if (error) {
         console.log(error);
       } else {
-        
+        //Creamos un array vacío que usaremos para hacer de copia del valor actual de userMangaList
+        let a = []
+        userMangaList.forEach((lista)=>{
+          a.push(lista)
+        })
+        //Añadimos la lista nueva
+        a.push({Nombre: nombre, Mangas: []})
+        //Actualizamos el estado de userMangaList
+        updateUserMangaList(a);
+        document.getElementById("error").innerHTML = "Lista creada con éxito";
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("error").innerHTML = "";
       }
-      document.getElementById("error").innerHTML = "Lista creada con éxito";
-      document.getElementById("overlay").style.display = "none";
     }
   }
   return (

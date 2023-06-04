@@ -20,7 +20,7 @@ function Filter() {
   }, []);
 
   if (!genders) {
-    console.log(genders);
+    
   } else {
     const uniqueGenders = [];
     genders.map((gender) => {

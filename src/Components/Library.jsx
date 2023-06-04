@@ -1,4 +1,3 @@
-import { MangaContextProvider } from "../Context/MangaContext";
 import NavBar from "./NavBar";
 import MangaList from "./MangaList";
 

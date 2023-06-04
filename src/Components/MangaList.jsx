@@ -5,16 +5,16 @@ import Filter from "./Filter";
 import { useTheme } from "../Context/ThemeContext";
 
 function MangaList() {
-  const { mangas, mangaSelected, selectManga } = useManga();
+  const { mangas, selectManga } = useManga();
   const navigate = useNavigate();
-  useEffect(() => {}, [mangas]);
+  // useEffect(() => {}, [mangas]);
 
   const { theme } = useTheme();
   if (!mangas) {
     return (
-      <>
+      <div className={theme === "light" ? "Applight" : "Appdark"}>
         <p>Cargando...</p>
-      </>
+      </div>
     );
   }
 

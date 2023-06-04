@@ -40,16 +40,6 @@ function PageSlider() {
     }
   };
 
-  // const grande = () =>{
-  //   if(document.getElementsByClassName("right1")[0].children[0].naturalWidth > 1000){
-  //     document.getElementsByClassName("right1")[0].style.width = "72%"
-  //     document.getElementsByClassName("right1")[0].style.left = "290px" 
-  //   }else{
-  //     document.getElementsByClassName("right1")[0].style.width = "36%"
-  //     document.getElementsByClassName("center")[0].style.width = "30%"
-  //     document.getElementsByClassName("center")[0].style.left = "597px"
-  //   }
-  // }
   const previous = () => {
     setSelectedIndex(selectedIndex - 1);
   };

@@ -85,7 +85,7 @@
     color: #ff3633;
     border-radius: 21px;
   }
-  
+
   .message {
     display: flex;
     flex-direction: column;
@@ -262,16 +262,16 @@ h1 {
   margin: 0px;
   margin-bottom: 5px;
 }
-.addlist{
+.addlist {
   width: 80%;
   margin-top: 20px;
 }
-.addlist.Appdark{
-  color:#ffffff;
+.addlist.Appdark {
+  color: #ffffff;
   background-color: #2f2e5e;
 }
-.addlist.Applight{
-  color:#ff3131;
+.addlist.Applight {
+  color: #ff3131;
   background-color: #ffffff;
 }
 .titleList {
@@ -325,6 +325,12 @@ li {
   box-shadow: 0px 0px 20px 10px rgba(234, 46, 46, 0.38);
 }
 
+.userList {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: auto;
+}
 .mangaList {
   display: flex;
   flex-direction: row;
@@ -667,6 +673,12 @@ div.Applight {
 div.Appdark {
   background-color: #535282;
 }
+.userList.Applight {
+  background-color: #f3f3f3;
+}
+.userList.Appdark {
+  background-color: #535282;
+}
 .mangaList.Applight {
   background-color: #f3f3f3;
 }
@@ -804,7 +816,7 @@ input {
   display: none;
 }
 
-.createListMessage.Appdark{
+.createListMessage.Appdark {
   background-color: #2f2e5e;
 }
 .message.Appdark {
