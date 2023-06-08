@@ -920,3 +920,27 @@ input {
 .sliderHome {
   transition: opacity 1s ease-out;
 }
+
+.listSelection{
+  width: 95%;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.listSelection.Applight{
+  color:#ff3131;
+  background-color: #f3f3f3;
+}
+
+.listSelection.Appdark{
+  color: white;
+  background-color: #535282;
+}
+
+.addButton{
+  color:white;
+  background-color: #ff3131;
+  width: 40%;
+  border-radius: 21px;
+  margin-top: 10%;
+}

@@ -32,7 +32,7 @@ export function UserContextProvider({ children }) {
     const getUserMangaList = async (userId) => {
       const { data } = await supabase
         .from("Lista")
-        .select("Nombre, Mangas")
+        .select("Nombre, Mangas, List_ID")
         .eq("User_ID", userId);
   
       if (error) {

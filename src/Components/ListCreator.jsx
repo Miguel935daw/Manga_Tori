@@ -34,14 +34,14 @@ function ListCreator() {
         console.log(error);
       } else {
         //Creamos un array vacío que usaremos para hacer de copia del valor actual de userMangaList
-        let a = []
+        let newList = []
         userMangaList.forEach((lista)=>{
-          a.push(lista)
+          newList.push(lista)
         })
         //Añadimos la lista nueva
-        a.push({Nombre: nombre, Mangas: []})
+        newList.push({Nombre: nombre, Mangas: []})
         //Actualizamos el estado de userMangaList
-        updateUserMangaList(a);
+        updateUserMangaList(newList);
         document.getElementById("error").innerHTML = "Lista creada con éxito";
         document.getElementById("overlay").style.display = "none";
         document.getElementById("error").innerHTML = "";
