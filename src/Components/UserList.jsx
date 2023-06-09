@@ -3,7 +3,7 @@ import { useManga } from "../Context/MangaContext";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
 import { useTheme } from "../Context/ThemeContext";
-
+import supabase from "../supabase/client";
 function UserList() {
   const { selectManga, UserListSelected, selectUserList } = useManga();
   const navigate = useNavigate();
@@ -11,6 +11,7 @@ function UserList() {
   const { theme } = useTheme();
   useEffect(() => {
     if (UserListSelected) {
+      console.log("Estoy cambiando")
       localStorage.setItem("UserListSelected", JSON.stringify(UserListSelected));
     }
   }, [UserListSelected]);
@@ -21,6 +22,20 @@ function UserList() {
       selectUserList(JSON.parse(storedState));
     }
   }, []);
+
+  const deleteManga = async (mangaToDelete) => {
+    let newList = {List_ID: UserListSelected.List_ID, Nombre: UserListSelected.Nombre};
+    newList.Mangas = UserListSelected.Mangas.filter((manga)=> manga != mangaToDelete)
+    selectUserList(newList)
+    const { error } = await supabase
+        .from("Lista")
+        .update({ Mangas:newList.Mangas })
+        .eq("List_ID", newList.List_ID);
+      if (error) {
+        console.log(error);
+      }
+  };
+
   if (!UserListSelected) {
     return (
       <div className={theme === "light" ? "Applight" : "Appdark"}>
@@ -37,9 +52,9 @@ function UserList() {
           theme === "light" ? "mangaList Applight" : "mangaList Appdark"
         }
       >
-        <div className="userList">
-          <div className="section" style={{ height: "fit-content" }}>
-            <h1 style={{ marginLeft: "10%" }}>{UserListSelected.Nombre}</h1>
+        <div className="mangas">
+          <div className="section" style={{ height: "fit-content", width: "100%", paddingBottom: "0%"}}>
+            <h1 style={{ marginLeft: "3%" }}>{UserListSelected.Nombre}</h1>
           </div>
           {UserListSelected.Mangas.length == 0 ? (
             <div className="section">
@@ -72,6 +87,16 @@ function UserList() {
                     >
                       {manga.Nombre}
                     </h2>
+                    <button
+                    className={
+                      theme === "light" ? "addlist Applight" : "addlist Appdark"
+                    }
+                    onClick={() => {
+                      deleteManga(manga);
+                    }}
+                  >
+                    Borrar manga de la lista
+                  </button>
                   </div>
                 ))}
               </div>

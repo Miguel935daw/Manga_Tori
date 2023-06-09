@@ -9,11 +9,12 @@ function MangaList() {
   const { mangas, selectManga, mangaSelected } = useManga();
   const navigate = useNavigate();
   const { theme } = useTheme();
-  const { userMangaList } = useAuth();
+  const { userMangaList, fetchUserMangaList } = useAuth();
   const popUp = () => {
     document.getElementById("overlay").style.display = "block";
     document.getElementById("close").addEventListener("click", function () {
       document.getElementById("overlay").style.display = "none";
+      document.getElementById("message").innerHTML = ""
     });
   };
   const compareMangas = (lista)=>{
@@ -37,14 +38,12 @@ function MangaList() {
         console.log(error);
       } else {
         listMangas = data[0].Mangas
-        console.log(listMangas)
       }
     //Si el manga seleccionado ya existe en la lista se indica en el mensaje
-    console.log(compareMangas(listMangas))
     if(compareMangas(listMangas)){
       document.getElementById("message").innerHTML = "El manga seleccionado ya existe en esta lista"
     }else{
-      //Se actualiza la lista incluyendo el manga seleccionado
+      //Se actualiza la lista en la base de datos incluyendo el manga seleccionado
       listMangas.push(mangaSelected)
       const { error } = await supabase
         .from("Lista")
@@ -58,7 +57,7 @@ function MangaList() {
       setTimeout(()=>{
         document.getElementById("close").click()
         document.getElementById("message").innerHTML = ""
-      },5000)
+      },1000)
     }
     
    }

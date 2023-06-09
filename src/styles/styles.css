@@ -7,6 +7,10 @@
 
 /* Pantallas 1440p */
 @media (min-width: 2560px) and (max-width: 3839px) {
+  .manga{
+    max-width: 328.27px;
+    max-height: 542.83px;
+  }
   .titleList {
     font-size: 2em;
   }
@@ -111,6 +115,10 @@
 
 /* Pantallas 1080p */
 @media (min-width: 1920px) and (max-width: 2559px) {
+  .manga{
+    max-width: 247.48px;
+    max-height: 423.72px;
+  }
   .titleList {
     font-size: 1.5em;
   }
@@ -818,6 +826,9 @@ input {
 
 .createListMessage.Appdark {
   background-color: #2f2e5e;
+}
+.createListMessage.Applight {
+  background-color: #ffffff;
 }
 .message.Appdark {
   background-color: #2f2e5e;

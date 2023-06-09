@@ -4,12 +4,25 @@ import { useTheme } from "../Context/ThemeContext";
 import { useAuth } from "../Context/UserContext";
 import ListCreator from "./ListCreator";
 import { useManga } from "../Context/MangaContext";
-
+import supabase from "../supabase/client";
 function Lists() {
   const { selectUserList } = useManga();
-  const { userMangaList } = useAuth();
+  const { userMangaList, updateUserMangaList, getUserMangaList, userSession } = useAuth();
   const navigate = useNavigate();
   const { theme } = useTheme();
+  
+  const deleteList = async (listToDelete) => {
+    let listID = listToDelete.List_ID
+    let newList = userMangaList.filter((list) => list != listToDelete);
+    updateUserMangaList(newList);
+    const { error } = await supabase
+      .from("Lista")
+      .delete()
+      .eq("List_ID", listID);
+    if (error) {
+      console.log(error);
+    }
+  };
   if (!userMangaList) {
     return (
       <div className={theme === "light" ? "Applight" : "Appdark"}>
@@ -33,38 +46,31 @@ function Lists() {
           .map((listaGroup) => (
             <div className="section">
               {listaGroup.map((lista) => (
-                <div
-                  onClick={() => {
-                    //Llevar a página de la lista
-                    selectUserList(lista);
-                    navigate("/Lista");
-                    window.scrollTo(0, 0);
-                  }}
-                >
+                <div>
                   {lista.Mangas.length != 0 ? (
-                    <img src={lista.Mangas[0].Portada} className="manga" />
-                  ) : (
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        border: "solid",
-                        justifyContent: "center",
-                        display: "flex",
-                        alignItems: "center",
-                        marginLeft: "0px",
+                    <img
+                      src={lista.Mangas[0].Portada}
+                      className="manga"
+                      onClick={() => {
+                        selectUserList(lista);
+                        navigate("/Lista");
+                        window.scrollTo(0, 0);
                       }}
-                    >
-                      <h2
-                        className={
-                          theme === "light"
-                            ? "titleList Applight"
-                            : "titleList Appdark"
-                        }
-                      >
-                        Sin Mangas
-                      </h2>
-                    </div>
+                    />
+                  ) : (
+                    <img
+                      src={
+                        theme === "light"
+                          ? "images/emptyListLight.png"
+                          : "images/emptyListDark.png"
+                      }
+                      className="manga"
+                      onClick={() => {
+                        selectUserList(lista);
+                        navigate("/Lista");
+                        window.scrollTo(0, 0);
+                      }}
+                    />
                   )}
 
                   <h2
@@ -74,6 +80,16 @@ function Lists() {
                   >
                     {lista.Nombre}
                   </h2>
+                  <button
+                    className={
+                      theme === "light" ? "addlist Applight" : "addlist Appdark"
+                    }
+                    onClick={() => {
+                      deleteList(lista);
+                    }}
+                  >
+                    Borrar lista
+                  </button>
                 </div>
               ))}
             </div>

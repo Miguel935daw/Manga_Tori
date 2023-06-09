@@ -19,10 +19,14 @@ function ListCreator() {
       nombresExistentes.push(mangaList.Nombre);
     });
     let nombre = document.getElementById("ListName").value.trim();
-    if (nombresExistentes.includes(nombre)) {
+    
+    if (nombre.value == '') {
+      document.getElementById("error").innerHTML = "Porfavor introduce un nombre para la lista"
+    }else if(nombresExistentes.includes(nombre)){
       document.getElementById("error").innerHTML =
-        "Ya existe una lista con el nombre introducido";
-    } else {
+      "Ya existe una lista con el nombre introducido";
+    }
+     else {
       const { data, error } = await supabase.from("Lista").insert([
         {
           User_ID: userSession.id,
@@ -87,7 +91,7 @@ function ListCreator() {
         style={{ cursor: "pointer", display: "flex" }}
         onClick={() => popUp()}
       >
-        <img src="/images/AddList.png" alt="" className="view" />
+        <img src={theme === "light" ? "images/AddListLight.png" : "images/AddListDark.png"} alt="" className="view" />
         <h2 className={theme === "light" ? "Applight" : "Appdark"}>
           Crear Lista
         </h2>
