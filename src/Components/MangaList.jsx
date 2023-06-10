@@ -9,7 +9,7 @@ function MangaList() {
   const { mangas, selectManga, mangaSelected } = useManga();
   const navigate = useNavigate();
   const { theme } = useTheme();
-  const { userMangaList, fetchUserMangaList } = useAuth();
+  const { userMangaList, updateUserMangaList } = useAuth();
   const popUp = () => {
     document.getElementById("overlay").style.display = "block";
     document.getElementById("close").addEventListener("click", function () {
@@ -28,30 +28,43 @@ function MangaList() {
   }
   const addToList = async ()=> {
     let listID = document.getElementById("list").value
-    let listMangas = []
+    let list = {}
     const { data, error } = await supabase
         .from("Lista")
-        .select("Mangas")
+        .select("*")
         .eq("List_ID", listID);
   
       if (error) {
         console.log(error);
       } else {
-        listMangas = data[0].Mangas
+        list = data[0]
       }
     //Si el manga seleccionado ya existe en la lista se indica en el mensaje
-    if(compareMangas(listMangas)){
+    if(compareMangas(list.Mangas)){
       document.getElementById("message").innerHTML = "El manga seleccionado ya existe en esta lista"
     }else{
       //Se actualiza la lista en la base de datos incluyendo el manga seleccionado
-      listMangas.push(mangaSelected)
+      list.Mangas.push(mangaSelected)
       const { error } = await supabase
         .from("Lista")
-        .update({ Mangas: listMangas })
+        .update({ Mangas: list.Mangas })
         .eq("List_ID", listID);
       if (error) {
         console.log(error);
       }
+      //Creamos un array vacío que usaremos para hacer de copia del valor actual de userMangaList
+      let newList = []
+      userMangaList.forEach((lista)=>{
+        //Cuando lleguemos al la lista a la que acabamos de añadir el manga, incluiremos la lista con el manga añadido en vez de la original
+        if(lista.List_ID == list.List_ID){
+          newList.push(list)
+        }else{
+          newList.push(lista)
+        }
+        
+      })
+      //Una vez tenemos la copia con el manga añadido en la lista correspondiente asignamos el nuevo valor al estado, para que se renderice de nuevo las sección de listas
+      updateUserMangaList(newList)
       document.getElementById("message").innerHTML = "El manga ha sido añadido a la lista con éxito"
       //Se espera un tiempo para que el usuario pueda ver el mensaje
       setTimeout(()=>{
