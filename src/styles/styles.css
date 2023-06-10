@@ -243,6 +243,7 @@ nav {
 }
 main {
   min-height: 100vh;
+  min-width: 100vh;
   height: auto;
 }
 
@@ -303,7 +304,7 @@ h1 {
 .title.Applight {
   color: #ff3131;
 }
-ul {
+nav ul {
   display: flex;
   align-items: stretch;
   align-items: center;
@@ -316,7 +317,7 @@ ul {
   text-align: right; /* Para que los enlaces estén a la derecha */
 }
 
-li {
+nav ul li {
   align-items: center;
   display: inline-flex;
   width: fit-content;
@@ -677,6 +678,7 @@ nav.Appdark {
 
 div.Applight {
   background-color: #f3f3f3;
+  
 }
 div.Appdark {
   background-color: #535282;
@@ -954,4 +956,58 @@ input {
   width: 40%;
   border-radius: 21px;
   margin-top: 10%;
+}
+
+.subscriptionSpot1{
+  margin-top: 3%;
+  border-radius: 10px;
+  width: 22%;
+  height: fit-content;
+  margin-bottom: 5%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 3%;
+}
+.subscriptionSpot2{
+  margin-top: 3%;
+  border-radius: 10px;
+  width: 30%;
+  height: fit-content;
+  margin-bottom: 5%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 3%;
+}
+
+.subscriptionSpot1.Applight{
+  background-color: white;
+}
+
+.subscriptionSpot1.Appdark{
+  background-color: #2f2e5e;
+}
+.subscriptionSpot2.Applight{
+  background-color: white;
+}
+
+.subscriptionSpot2.Appdark{
+  background-color: #2f2e5e;
+}
+
+.suscribe2 {
+  background-color: #ff3131;
+  color: white;
+  border-radius: 10px;
+  width: 40%;
+  height: 40%;
+  font-size: 1.5em
+}
+main.Applight{
+  background-color: #f3f3f3;
+}
+
+main.Appdark{
+  background-color: #535282;
 }

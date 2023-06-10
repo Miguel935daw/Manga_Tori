@@ -25,9 +25,9 @@ function Lists() {
   };
   if (!userMangaList) {
     return (
-      <div className={theme === "light" ? "Applight" : "Appdark"}>
+      <>
         <p>Cargando...</p>
-      </div>
+      </>
     );
   }
   return (

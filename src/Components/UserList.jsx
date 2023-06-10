@@ -38,9 +38,9 @@ function UserList() {
 
   if (!UserListSelected) {
     return (
-      <div className={theme === "light" ? "Applight" : "Appdark"}>
+      <>
         <p>Cargando...</p>
-      </div>
+      </>
     );
   }
 

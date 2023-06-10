@@ -16,7 +16,7 @@ function MangasOfTheMoment() {
   }
 
   return (
-    <div className={theme === "light" ? "Applight" : "Appdark"}>
+    <>
       <div>
         <h2 className={theme === "light" ? "title Applight" : "title Appdark"}>Mangas del momento</h2>
         <span className={theme === "light" ? "bar2 Applight" : "bar2 Appdark"}></span>
@@ -37,7 +37,7 @@ function MangasOfTheMoment() {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 }
 

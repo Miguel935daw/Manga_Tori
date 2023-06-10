@@ -75,7 +75,7 @@ function Register() {
       <NavBar />
       <div className={theme === "light" ? "login Applight" : "login Appdark"}>
         {showConfirmation ? (
-          <p>Se le ha enviado un correo de confirmación</p>
+          <p style={{color: "#ff3131", fontSize: '1.5em'}}>Se le ha enviado un correo de confirmación</p>
         ) : (
           <form
             onSubmit={handleSubmit}

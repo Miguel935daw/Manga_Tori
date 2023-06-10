@@ -14,7 +14,7 @@ function MangaList() {
     document.getElementById("overlay").style.display = "block";
     document.getElementById("close").addEventListener("click", function () {
       document.getElementById("overlay").style.display = "none";
-      document.getElementById("message").innerHTML = ""
+      document.getElementById("message").innerHTML = "";
     });
   };
   const compareMangas = (lista)=>{
@@ -61,7 +61,6 @@ function MangaList() {
         }else{
           newList.push(lista)
         }
-        
       })
       //Una vez tenemos la copia con el manga añadido en la lista correspondiente asignamos el nuevo valor al estado, para que se renderice de nuevo las sección de listas
       updateUserMangaList(newList)

@@ -66,6 +66,7 @@ function MangaChapterList() {
         document.getElementById("overlay").style.display = "none";
       });
     } else {
+      document.getElementById(chapter).innerHTML = "Descarga Comenzada";
       download(chapter);
     }
     event.stopPropagation();
@@ -157,7 +158,6 @@ function MangaChapterList() {
       document.getElementById(chapter).style.opacity = 0;
       document.getElementById(chapter).style.color = "red";
     });
-    
   }
 
   //UseEffect para que en caso el usuario haya iniciado sesión consultar el progreso
@@ -262,8 +262,6 @@ function MangaChapterList() {
                   alt=""
                   className="download"
                   onClick={(event) => {
-                    document.getElementById(chapter).innerHTML =
-                      "Descarga Comenzada";
                     document.getElementById(chapter).style.opacity = 1;
                     downloadPopUp(chapter, event);
                   }}
@@ -277,23 +275,20 @@ function MangaChapterList() {
                 width: "20%",
                 alignItems: "center",
                 justifyContent: "left",
-                gap: "10px"
+                gap: "10px",
               }}
             >
               <p id={chapter} className="downloadMessage"></p>
               <div
                 style={{
                   width: "50%",
-                  height:"fit-content",
+                  height: "fit-content",
                   border: "2px solid black",
-                  display: "none" 
+                  display: "none",
                 }}
                 id={"container-" + chapter}
               >
-                <span
-                  className="progressBar"
-                  id={"progress-" + chapter}
-                ></span>
+                <span className="progressBar" id={"progress-" + chapter}></span>
               </div>
             </div>
           </div>

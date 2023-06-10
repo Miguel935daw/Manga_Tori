@@ -66,10 +66,10 @@ function NavBar() {
             ""
           )}
           <li>
-            <a onClick={() => navigate("/Suscripcion")}>Suscripcion</a>
+            <a onClick={() => navigate("/Subscription")}>Suscripcion</a>
           </li>
           <li>
-            <a onClick={() => navigate("/Biblioteca")}>Biblioteca</a>
+            <a onClick={() => navigate("/Library")}>Biblioteca</a>
           </li>
           <li>
             <a
