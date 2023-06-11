@@ -10,7 +10,7 @@ import Listas from "./Components/Listas";
 import UserList from "./Components/UserList"
 import  Subscription  from "./Components/Subscription";
 import { useTheme } from "./Context/ThemeContext";
-
+import Payment from "./Components/Payment";
 function App() {
   const { theme } = useTheme();
   return (

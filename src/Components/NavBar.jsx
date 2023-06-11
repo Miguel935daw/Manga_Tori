@@ -66,7 +66,13 @@ function NavBar() {
             ""
           )}
           <li>
-            <a onClick={() => navigate("/Subscription")}>Suscripcion</a>
+            {userSubscription ? (
+              <a href="https://billing.stripe.com/p/login/test_aEU295gujfxOc928ww">
+                Suscripcion
+              </a>
+            ) : (
+              <a onClick={() => navigate("/Subscription")}>Suscripcion</a>
+            )}
           </li>
           <li>
             <a onClick={() => navigate("/Library")}>Biblioteca</a>

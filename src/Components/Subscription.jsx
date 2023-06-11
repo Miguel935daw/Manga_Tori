@@ -1,29 +1,12 @@
 import { useAuth } from "../Context/UserContext";
 import { useTheme } from "../Context/ThemeContext";
+import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
 function Subscription() {
   const { userSession, userSubscription } = useAuth();
   const { theme } = useTheme();
+  const navigate = useNavigate();
 
-  if (userSubscription) {
-    return (
-      <>
-        <NavBar />
-        <div className={theme === "light" ? "Applight" : "Appdark"}>
-          <form
-            className={
-              theme === "light"
-                ? "subscriptionSpot1 Applight"
-                : "subscriptionSpot1 Appdark"
-            }
-          >
-            <img src="/images/logo.png" alt="logo" className="loginLogo" />
-            <label htmlFor="titular">Titular de la tarjeta</label>
-          </form>
-        </div>
-      </>
-    );
-  }
   return (
     <>
       <NavBar />
@@ -94,7 +77,15 @@ function Subscription() {
             <li>Crear Listas: Sí</li>
             <li>Coste: 5€/mes</li>
           </ul>
-          <button className="suscribe2">Suscribirse</button>
+          <form
+            action="http://localhost:4242/create-checkout-session"
+            method="POST"
+          >
+            <input type="hidden" name="lookup_key" value="a" />
+            <button id="checkout-and-portal-button" className="suscribe2" type="submit">
+              Suscribirse
+            </button>
+          </form>
         </div>
       </div>
     </>
