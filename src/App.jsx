@@ -8,9 +8,9 @@ import MangaSection from "./Components/MangaSection";
 import View from "./Components/View";
 import Listas from "./Components/Listas";
 import UserList from "./Components/UserList"
-import  Subscription  from "./Components/Subscription";
+
 import { useTheme } from "./Context/ThemeContext";
-import Payment from "./Components/Payment";
+
 function App() {
   const { theme } = useTheme();
   return (
@@ -25,7 +25,6 @@ function App() {
           <Route path="/Chapter" element={<View />} />
           <Route path="/Listas" element={<Listas />} />
           <Route path="/Lista" element={<UserList />} />
-          <Route path="/Subscription" element={<Subscription />} />
         </Routes>
       </main>
     

@@ -8,9 +8,9 @@ function MangaInfo() {
 
   if (!mangaSelected) {
     return (
-      <>
-        <p>Cargando...</p>
-      </>
+      <p className={
+        theme === "light" ? "title Applight" : "title Appdark"
+      }>Cargando...</p>
     );
   } else {
     const state = mangaSelected.Estado == true ? "Finalizado" : "Publicándose";

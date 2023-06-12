@@ -25,7 +25,9 @@ function ChapterView() {
   if (!chapterSelected) {
     return (
       <>
-        <p>Cargando...</p>
+       <p className={
+        theme === "light" ? "title Applight" : "title Appdark"
+      }>Cargando...</p>
       </>
     );
   } else {

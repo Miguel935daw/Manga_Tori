@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "../Context/ThemeContext";
 import { useAuth } from "../Context/UserContext";
 import supabase from "../Supabase/client";
+
 function MangaChapterList() {
   //Importo los estados y setter necesarios
   const { mangaSelected, setMangaSelected, selectChapter } = useManga();
@@ -22,8 +23,14 @@ function MangaChapterList() {
       .eq("User_ID", userSession.id);
     if (error) {
       console.log(error);
+      setReadingProgress([]);
     } else {
-      setReadingProgress(Lectura[0].Capitulos_Leidos);
+      //Cuando Lectura está vacio es que no hay progreso de ese manga en la base de datos
+      if (Lectura.length != 0) {
+        setReadingProgress(Lectura[0].Capitulos_Leidos);
+      } else {
+        setReadingProgress([]);
+      }
     }
   }
   //Función para actualizar el campo Capitulos_Leidos de la tabla cada vez que se pincha en un capítulo y este no existe en el campo.
@@ -90,6 +97,7 @@ function MangaChapterList() {
           //Creamos un array vacío para copiar el valor actual de readingProgress, añadimos el capitulo y cambiamos el valor del estado
           let newReadingProgress = [...readingProgress, chapter];
           updateReadingProgress(newReadingProgress);
+          setReadingProgress(newReadingProgress);
         }
       } else {
         const { data, error } = await supabase.from("Lectura").insert([
@@ -196,7 +204,9 @@ function MangaChapterList() {
   if (!mangaSelected) {
     return (
       <>
-        <p>Cargando...</p>
+        <p className={theme === "light" ? "title Applight" : "title Appdark"}>
+          Cargando...
+        </p>
       </>
     );
   } else {

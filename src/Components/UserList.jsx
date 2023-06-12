@@ -39,7 +39,9 @@ function UserList() {
   if (!UserListSelected) {
     return (
       <>
-        <p>Cargando...</p>
+        <p className={
+          theme === "light" ? "title Applight" : "title Appdark"
+        }>Cargando...</p>
       </>
     );
   }

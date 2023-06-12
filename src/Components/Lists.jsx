@@ -7,12 +7,12 @@ import { useManga } from "../Context/MangaContext";
 import supabase from "../Supabase/client";
 function Lists() {
   const { selectUserList } = useManga();
-  const { userMangaList, updateUserMangaList} = useAuth();
+  const { userMangaList, updateUserMangaList } = useAuth();
   const navigate = useNavigate();
   const { theme } = useTheme();
-  
+
   const deleteList = async (listToDelete) => {
-    let listID = listToDelete.List_ID
+    let listID = listToDelete.List_ID;
     let newList = userMangaList.filter((list) => list != listToDelete);
     updateUserMangaList(newList);
     const { error } = await supabase
@@ -26,7 +26,9 @@ function Lists() {
   if (!userMangaList) {
     return (
       <>
-        <p>Cargando...</p>
+        <p className={theme === "light" ? "title Applight" : "title Appdark"}>
+          Cargando...
+        </p>
       </>
     );
   }

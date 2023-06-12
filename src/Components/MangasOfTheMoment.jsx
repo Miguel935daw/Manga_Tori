@@ -9,9 +9,9 @@ function MangasOfTheMoment() {
   const { theme } = useTheme();
   if (!mangasOfTheMoment) {
     return (
-      <div className={theme === "light" ? "Applight" : "Appdark"}>
-        <p>Cargando...</p>
-      </div>
+      <p className={
+        theme === "light" ? "title Applight" : "title Appdark"
+      }>Cargando...</p>
     );
   }
 
