@@ -11,8 +11,11 @@ function UserList() {
   const { theme } = useTheme();
   useEffect(() => {
     if (UserListSelected) {
-      console.log("Estoy cambiando")
-      localStorage.setItem("UserListSelected", JSON.stringify(UserListSelected));
+      console.log("Estoy cambiando");
+      localStorage.setItem(
+        "UserListSelected",
+        JSON.stringify(UserListSelected)
+      );
     }
   }, [UserListSelected]);
 
@@ -24,24 +27,29 @@ function UserList() {
   }, []);
 
   const deleteManga = async (mangaToDelete) => {
-    let newList = {List_ID: UserListSelected.List_ID, Nombre: UserListSelected.Nombre};
-    newList.Mangas = UserListSelected.Mangas.filter((manga)=> manga != mangaToDelete)
-    selectUserList(newList)
+    let newList = {
+      List_ID: UserListSelected.List_ID,
+      Nombre: UserListSelected.Nombre,
+    };
+    newList.Mangas = UserListSelected.Mangas.filter(
+      (manga) => manga != mangaToDelete
+    );
+    selectUserList(newList);
     const { error } = await supabase
-        .from("Lista")
-        .update({ Mangas:newList.Mangas })
-        .eq("List_ID", newList.List_ID);
-      if (error) {
-        console.log(error);
-      }
+      .from("Lista")
+      .update({ Mangas: newList.Mangas })
+      .eq("List_ID", newList.List_ID);
+    if (error) {
+      console.log(error);
+    }
   };
 
   if (!UserListSelected) {
     return (
       <>
-        <p className={
-          theme === "light" ? "title Applight" : "title Appdark"
-        }>Cargando...</p>
+        <p className={theme === "light" ? "title Applight" : "title Appdark"}>
+          Cargando...
+        </p>
       </>
     );
   }
@@ -55,12 +63,21 @@ function UserList() {
         }
       >
         <div className="mangas">
-          <div className="section" style={{ height: "fit-content", width: "100%", paddingBottom: "0%"}}>
+          <div
+            className="section"
+            style={{
+              height: "fit-content",
+              width: "100%",
+              paddingBottom: "0%",
+            }}
+          >
             <h1 style={{ marginLeft: "3%" }}>{UserListSelected.Nombre}</h1>
           </div>
           {UserListSelected.Mangas.length == 0 ? (
             <div className="section">
-              <h2 style={{ marginLeft: "10%" }}>Esta lista aún no tiene ningún manga</h2>
+              <h2 style={{ marginLeft: "10%" }}>
+                Esta lista aún no tiene ningún manga
+              </h2>
             </div>
           ) : (
             UserListSelected.Mangas.reduce((acc, manga, index) => {
@@ -90,15 +107,17 @@ function UserList() {
                       {manga.Nombre}
                     </h2>
                     <button
-                    className={
-                      theme === "light" ? "addlist Applight" : "addlist Appdark"
-                    }
-                    onClick={() => {
-                      deleteManga(manga);
-                    }}
-                  >
-                    Borrar manga de la lista
-                  </button>
+                      className={
+                        theme === "light"
+                          ? "addlist Applight"
+                          : "addlist Appdark"
+                      }
+                      onClick={() => {
+                        deleteManga(manga);
+                      }}
+                    >
+                      Borrar manga de la lista
+                    </button>
                   </div>
                 ))}
               </div>

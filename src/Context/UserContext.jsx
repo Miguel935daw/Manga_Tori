@@ -11,22 +11,23 @@ export function UserContextProvider({ children }) {
   const updateUserMangaList = function(newList){
     setUserMangaList(newList)
   }
+  //Función para obtener las listas del usuario actual
+  const getUserMangaList = async (userId) => {
+    const { data, error } = await supabase
+      .from("Lista")
+      .select("Nombre, Mangas, List_ID")
+      .eq("User_ID", userId);
+
+    if (error) {
+      console.log(error);
+    } else {
+      setUserMangaList(data)
+    }
+  };
   useEffect(() => {
     const { data, error } = async () => await supabase.auth.getSession();
     setUserSession(data?.user ?? null);
-    //Función para obtener las listas del usuario actual
-    const getUserMangaList = async (userId) => {
-      const { data } = await supabase
-        .from("Lista")
-        .select("Nombre, Mangas, List_ID")
-        .eq("User_ID", userId);
-  
-      if (error) {
-        console.log(error);
-      } else {
-        setUserMangaList(data)
-      }
-    };
+    
     //En caso de que cambie la sesión se redirige al usuario al inicio
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
@@ -43,7 +44,8 @@ export function UserContextProvider({ children }) {
   const value = {
     userSession,
     userMangaList,
-    updateUserMangaList
+    updateUserMangaList, 
+    getUserMangaList
   };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
