@@ -7,7 +7,7 @@ import { useManga } from "../Context/MangaContext";
 import supabase from "../Supabase/client";
 function Lists() {
   const { selectUserList } = useManga();
-  const { userMangaList, updateUserMangaList, getUserMangaList, userSession } = useAuth();
+  const { userMangaList, updateUserMangaList} = useAuth();
   const navigate = useNavigate();
   const { theme } = useTheme();
   

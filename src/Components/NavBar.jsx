@@ -7,7 +7,7 @@ import { useTheme } from "../Context/ThemeContext";
 
 import "../styles/styles.css";
 function NavBar() {
-  const { userSession, userSubscription } = useAuth();
+  const { userSession } = useAuth();
   const { theme, toggleTheme, setTheme } = useTheme();
   const navigate = useNavigate();
 
@@ -58,22 +58,13 @@ function NavBar() {
               }}
             ></span>
           </li>
-          {userSubscription ? (
+          {userSession ? (
             <li>
               <a onClick={() => navigate("/Listas")}>Mis Listas</a>
             </li>
           ) : (
             ""
           )}
-          <li>
-            {userSubscription ? (
-              <a href="https://billing.stripe.com/p/login/test_aEU295gujfxOc928ww">
-                Suscripcion
-              </a>
-            ) : (
-              <a onClick={() => navigate("/Subscription")}>Suscripcion</a>
-            )}
-          </li>
           <li>
             <a onClick={() => navigate("/Library")}>Biblioteca</a>
           </li>

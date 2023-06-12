@@ -8,7 +8,7 @@ import supabase from "../Supabase/client";
 function MangaChapterList() {
   //Importo los estados y setter necesarios
   const { mangaSelected, setMangaSelected, selectChapter } = useManga();
-  const { userSession, userSubscription } = useAuth();
+  const { userSession } = useAuth();
   const navigate = useNavigate();
   const { theme } = useTheme();
   //Estado para guardar el progreso de la lectura
@@ -30,7 +30,6 @@ function MangaChapterList() {
   }
   //Función para actualizar el campo Capitulos_Leidos de la tabla cada vez que se pincha en un capítulo y este no existe en el campo.
   async function updateReadingProgress() {
-    console.log(readingProgress);
     const { data, error } = await supabase
       .from("Lectura")
       .update({ Capitulos_Leidos: readingProgress })
@@ -39,12 +38,12 @@ function MangaChapterList() {
     if (error) {
       console.log(error);
     } else {
-      console.log("Actualizado");
+      console.log(data);
     }
   }
   //Función para hacer que aparezca el popUp
   const popUp = (chapter) => {
-    if (userSubscription !== true || userSession === null) {
+    if (userSession === null) {
       document.getElementById("overlay").style.display = "block";
       document.getElementById("close").addEventListener("click", function () {
         document.getElementById("overlay").style.display = "none";
@@ -60,7 +59,7 @@ function MangaChapterList() {
   };
 
   const downloadPopUp = (chapter, event) => {
-    if (userSubscription !== true || userSession === null) {
+    if (userSession === null) {
       document.getElementById("overlay").style.display = "block";
       document.getElementById("close").addEventListener("click", function () {
         document.getElementById("overlay").style.display = "none";
@@ -91,9 +90,14 @@ function MangaChapterList() {
   const makeProgress = async (chapter) => {
     if (userSession) {
       if (readingProgress.length != 0) {
-        console.log(readingProgress);
         if (!readingProgress.includes(chapter)) {
-          readingProgress.push(chapter);
+          //Creamos un array vacío para copiar el valor actual de readingProgress, añadimos el capitulo y cambiamos el valor del estado
+          let newReadingProgress = []
+          readingProgress.forEach((cap)=>{
+            newReadingProgress.push(cap)
+          })
+          newReadingProgress.push(chapter)
+          setReadingProgress(newReadingProgress)
         }
       } else {
         const { data, error } = await supabase.from("Lectura").insert([
@@ -106,7 +110,7 @@ function MangaChapterList() {
         if (error) {
           console.log(error);
         } else {
-          readingProgress.push(chapter);
+          setReadingProgress([chapter])
         }
       }
     }
@@ -221,13 +225,18 @@ function MangaChapterList() {
             </div>
             <img src="/images/logo.png" alt="logo" className="loginLogo" />
             <p>
-              Parece que no estas suscrito, así solo podrás acceder a los 5
-              primeros capítulos de nuestros mangas. Recuerda que suscribiéndote
+              Parece que no estas registrado, así solo podrás acceder a los 5
+              primeros capítulos de nuestros mangas. Recuerda que registrandote
               no solo obtienes acceso a todo nuestro catálogo, sino que también
               obtienes otras ventajas tales como la posibilidad de descargar los
               capítulos que quieras y crear tus propias listas.
             </p>
-            <button className="suscribe">Suscribirse</button>
+            <button className="suscribe" onClick={()=>{
+              document.getElementById('close').click()
+              navigate("/Register")
+              window.scrollTo(0, 0);
+            }
+              }>Registrarse</button>
           </div>
         </div>
 
