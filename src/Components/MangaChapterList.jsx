@@ -23,24 +23,21 @@ function MangaChapterList() {
     if (error) {
       console.log(error);
     } else {
-      if (Lectura.length != 0) {
-        setReadingProgress(Lectura[0].Capitulos_Leidos);
-      }
+      setReadingProgress(Lectura[0].Capitulos_Leidos);
     }
   }
   //Función para actualizar el campo Capitulos_Leidos de la tabla cada vez que se pincha en un capítulo y este no existe en el campo.
-  async function updateReadingProgress() {
+  async function updateReadingProgress(chapters) {
     const { data, error } = await supabase
       .from("Lectura")
-      .update({ Capitulos_Leidos: readingProgress })
+      .update({ Capitulos_Leidos: chapters })
       .eq("Manga_ID", mangaSelected.Manga_ID)
       .eq("User_ID", userSession.id);
     if (error) {
       console.log(error);
-    } else {
-      console.log(data);
     }
   }
+
   //Función para hacer que aparezca el popUp
   const popUp = (chapter) => {
     if (userSession === null) {
@@ -51,7 +48,6 @@ function MangaChapterList() {
     } else {
       (async () => {
         await makeProgress(chapter);
-        updateReadingProgress();
         selectChapter(chapter);
         navigate("/Chapter");
       })();
@@ -92,12 +88,8 @@ function MangaChapterList() {
       if (readingProgress.length != 0) {
         if (!readingProgress.includes(chapter)) {
           //Creamos un array vacío para copiar el valor actual de readingProgress, añadimos el capitulo y cambiamos el valor del estado
-          let newReadingProgress = []
-          readingProgress.forEach((cap)=>{
-            newReadingProgress.push(cap)
-          })
-          newReadingProgress.push(chapter)
-          setReadingProgress(newReadingProgress)
+          let newReadingProgress = [...readingProgress, chapter];
+          updateReadingProgress(newReadingProgress);
         }
       } else {
         const { data, error } = await supabase.from("Lectura").insert([
@@ -110,7 +102,7 @@ function MangaChapterList() {
         if (error) {
           console.log(error);
         } else {
-          setReadingProgress([chapter])
+          setReadingProgress([chapter]);
         }
       }
     }
@@ -186,7 +178,7 @@ function MangaChapterList() {
     }
   }, [setMangaSelected]);
 
-  //Use Effect para guardar el manga seleccionado en el localStorage
+  //Use Effect para guardar el progreso seleccionado en el localStorage
   useEffect(() => {
     if (readingProgress.length != 0) {
       localStorage.setItem("readingProgress", JSON.stringify(readingProgress));
@@ -231,12 +223,16 @@ function MangaChapterList() {
               obtienes otras ventajas tales como la posibilidad de descargar los
               capítulos que quieras y crear tus propias listas.
             </p>
-            <button className="suscribe" onClick={()=>{
-              document.getElementById('close').click()
-              navigate("/Register")
-              window.scrollTo(0, 0);
-            }
-              }>Registrarse</button>
+            <button
+              className="suscribe"
+              onClick={() => {
+                document.getElementById("close").click();
+                navigate("/Register");
+                window.scrollTo(0, 0);
+              }}
+            >
+              Registrarse
+            </button>
           </div>
         </div>
 
@@ -257,7 +253,6 @@ function MangaChapterList() {
                   ? () => popUp(chapter)
                   : async () => {
                       await makeProgress(chapter);
-                      updateReadingProgress();
                       selectChapter(chapter);
                       navigate("/Chapter");
                     }

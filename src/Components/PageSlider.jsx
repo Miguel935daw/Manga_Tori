@@ -6,7 +6,6 @@ function PageSlider() {
   const { mangaSelected, chapterSelected, selectChapter, setMangaSelected } =
     useManga();
   const { theme } = useTheme();
-  const { viewMode, separation, width } = useChapter();
   useEffect(() => {
     if (chapterSelected) {
       localStorage.setItem("chapterSelected", JSON.stringify(chapterSelected));
