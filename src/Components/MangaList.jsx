@@ -17,34 +17,35 @@ function MangaList() {
       document.getElementById("message").innerHTML = "";
     });
   };
-  const compareMangas = (lista)=>{
+  const compareMangas = (lista) => {
     for (let i = 0; i < lista.length; i++) {
       const manga = lista[i];
       if (manga.Manga_ID == mangaSelected.Manga_ID) {
         return true;
       }
     }
-    return false
-  }
-  const addToList = async ()=> {
-    let listID = document.getElementById("list").value
-    let list = {}
+    return false;
+  };
+  const addToList = async () => {
+    let listID = document.getElementById("list").value;
+    let list = {};
     const { data, error } = await supabase
-        .from("Lista")
-        .select("*")
-        .eq("List_ID", listID);
-  
-      if (error) {
-        console.log(error);
-      } else {
-        list = data[0]
-      }
+      .from("Lista")
+      .select("*")
+      .eq("List_ID", listID);
+
+    if (error) {
+      console.log(error);
+    } else {
+      list = data[0];
+    }
     //Si el manga seleccionado ya existe en la lista se indica en el mensaje
-    if(compareMangas(list.Mangas)){
-      document.getElementById("message").innerHTML = "El manga seleccionado ya existe en esta lista"
-    }else{
+    if (compareMangas(list.Mangas)) {
+      document.getElementById("message").innerHTML =
+        "El manga seleccionado ya existe en esta lista";
+    } else {
       //Se actualiza la lista en la base de datos incluyendo el manga seleccionado
-      list.Mangas.push(mangaSelected)
+      list.Mangas.push(mangaSelected);
       const { error } = await supabase
         .from("Lista")
         .update({ Mangas: list.Mangas })
@@ -53,26 +54,26 @@ function MangaList() {
         console.log(error);
       }
       //Creamos un array vacío que usaremos para hacer de copia del valor actual de userMangaList
-      let newList = []
-      userMangaList.forEach((lista)=>{
+      let newList = [];
+      userMangaList.forEach((lista) => {
         //Cuando lleguemos al la lista a la que acabamos de añadir el manga, incluiremos la lista con el manga añadido en vez de la original
-        if(lista.List_ID == list.List_ID){
-          newList.push(list)
-        }else{
-          newList.push(lista)
+        if (lista.List_ID == list.List_ID) {
+          newList.push(list);
+        } else {
+          newList.push(lista);
         }
-      })
+      });
       //Una vez tenemos la copia con el manga añadido en la lista correspondiente asignamos el nuevo valor al estado, para que se renderice de nuevo las sección de listas
-      updateUserMangaList(newList)
-      document.getElementById("message").innerHTML = "El manga ha sido añadido a la lista con éxito"
+      updateUserMangaList(newList);
+      document.getElementById("message").innerHTML =
+        "El manga ha sido añadido a la lista con éxito";
       //Se espera un tiempo para que el usuario pueda ver el mensaje
-      setTimeout(()=>{
-        document.getElementById("close").click()
-        document.getElementById("message").innerHTML = ""
-      },1000)
+      setTimeout(() => {
+        document.getElementById("close").click();
+        document.getElementById("message").innerHTML = "";
+      }, 1000);
     }
-    
-   }
+  };
   if (!mangas) {
     return (
       <div className={theme === "light" ? "Applight" : "Appdark"}>
@@ -85,28 +86,51 @@ function MangaList() {
     <div
       className={theme === "light" ? "mangaList Applight" : "mangaList Appdark"}
     >
-      <div id="overlay">
-        <div
-          className={theme === "light" ? "message Applight" : "message Appdark"}
-        >
+      {/* Si el usuario está registrado se crea el pop up para añadir a las listas*/}
+      {userMangaList ? (
+        <div id="overlay">
           <div
-            style={{ justifyContent: "end", display: "flex", width: "100%", textAlign: "start"}}
+            className={
+              theme === "light" ? "message Applight" : "message Appdark"
+            }
           >
-            <img src="/images/close.png" alt="cerrar" id="close" />
+            <div
+              style={{
+                justifyContent: "end",
+                display: "flex",
+                width: "100%",
+                textAlign: "start",
+              }}
+            >
+              <img src="/images/close.png" alt="cerrar" id="close" />
+            </div>
+            <img src="/images/logo.png" alt="logo" className="loginLogo" />
+            <label htmlFor="list" style={{ width: "100%" }}>
+              Selecciona la lista:{" "}
+            </label>
+            <select
+              name="list"
+              id="list"
+              className={
+                theme === "light"
+                  ? "listSelection Applight"
+                  : "listSelection Appdark"
+              }
+            >
+              {userMangaList.map((lista) => (
+                <option value={lista.List_ID}>{lista.Nombre}</option>
+              ))}
+            </select>
+            <button onClick={() => addToList()} className="addButton">
+              Añadir
+            </button>
+            <p id="message"></p>
           </div>
-          <img src="/images/logo.png" alt="logo" className="loginLogo" />
-          <label htmlFor="list" style={{width: "100%"}}>Selecciona la lista: </label>
-          <select name="list" id="list" className={
-                      theme === "light" ? "listSelection Applight" : "listSelection Appdark"
-                    }>
-            {userMangaList.map((lista) => (
-              <option value={lista.List_ID}>{lista.Nombre}</option>
-            ))}
-          </select>
-          <button onClick={ ()=> addToList()} className="addButton">Añadir</button>
-          <p id="message"></p>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
+
       <div className="mangas">
         {mangas
           .reduce((acc, manga, index) => {
@@ -136,18 +160,24 @@ function MangaList() {
                   >
                     {manga.Nombre}
                   </h2>
-                  <button
-                    className={
-                      theme === "light" ? "addlist Applight" : "addlist Appdark"
-                    }
-                    onClick={()=>{
-                      selectManga(manga);
-                      popUp()
-                    }
-                    }
-                  >
-                    Añadir a una lista
-                  </button>
+                  {/* Si el usuario está registrado se muestra el botón para añádir a la lista */}
+                  {userMangaList ? (
+                    <button
+                      className={
+                        theme === "light"
+                          ? "addlist Applight"
+                          : "addlist Appdark"
+                      }
+                      onClick={() => {
+                        selectManga(manga);
+                        popUp();
+                      }}
+                    >
+                      Añadir a una lista
+                    </button>
+                  ) : (
+                    ""
+                  )}
                 </div>
               ))}
             </div>

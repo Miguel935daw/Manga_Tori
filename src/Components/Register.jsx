@@ -18,7 +18,6 @@ function comprobarContraseña(valor, campo) {
 }
 
 function Register() {
-  const navigate = useNavigate();
   //Variable para el correo
   const [email, setEmail] = useState("");
   //Variable para la contraseña

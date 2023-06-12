@@ -120,7 +120,7 @@ function NavBar() {
           ></span>
         </li>
         <li>
-          <a onClick={() => navigate("/Biblioteca")}>Biblioteca</a>
+          <a onClick={() => navigate("/Library")}>Biblioteca</a>
         </li>
         <li>
           <a onClick={() => navigate("/Login")}>Iniciar Sesión</a>
