@@ -1,4 +1,4 @@
-import supabase from "../supabase/client";
+import supabase from "../Supabase/client";
 import { useNavigate } from "react-router-dom";
 import { useChapter } from "../Context/ChapterContext";
 import { useTheme } from "../Context/ThemeContext";

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { MangaContext, useManga } from "../Context/MangaContext";
-import supabase from "../supabase/client";
+import supabase from "../Supabase/client";
 import { useTheme } from "../Context/ThemeContext";
 
 function Filter() {

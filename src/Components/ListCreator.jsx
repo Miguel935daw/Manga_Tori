@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../Context/ThemeContext";
 import { useAuth } from "../Context/UserContext";
-import supabase from "../supabase/client";
+import supabase from "../Supabase/client";
 function ListCreator() {
   const { userSession, userMangaList, updateUserMangaList } = useAuth();
   const { theme } = useTheme();

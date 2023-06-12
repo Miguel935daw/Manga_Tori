@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Filter from "./Filter";
 import { useTheme } from "../Context/ThemeContext";
 import { useAuth } from "../Context/UserContext";
-import supabase from "../supabase/client";
+import supabase from "../Supabase/client";
 function MangaList() {
   const { mangas, selectManga, mangaSelected } = useManga();
   const navigate = useNavigate();

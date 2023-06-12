@@ -3,7 +3,7 @@ import { useManga } from "../Context/MangaContext";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
 import { useTheme } from "../Context/ThemeContext";
-import supabase from "../supabase/client";
+import supabase from "../Supabase/client";
 function UserList() {
   const { selectManga, UserListSelected, selectUserList } = useManga();
   const navigate = useNavigate();

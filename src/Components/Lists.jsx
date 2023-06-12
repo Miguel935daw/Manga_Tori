@@ -4,7 +4,7 @@ import { useTheme } from "../Context/ThemeContext";
 import { useAuth } from "../Context/UserContext";
 import ListCreator from "./ListCreator";
 import { useManga } from "../Context/MangaContext";
-import supabase from "../supabase/client";
+import supabase from "../Supabase/client";
 function Lists() {
   const { selectUserList } = useManga();
   const { userMangaList, updateUserMangaList, getUserMangaList, userSession } = useAuth();

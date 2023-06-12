@@ -4,7 +4,7 @@ import { useManga } from "../Context/MangaContext";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../Context/ThemeContext";
 import { useAuth } from "../Context/UserContext";
-import supabase from "../supabase/client";
+import supabase from "../Supabase/client";
 function MangaChapterList() {
   //Importo los estados y setter necesarios
   const { mangaSelected, setMangaSelected, selectChapter } = useManga();

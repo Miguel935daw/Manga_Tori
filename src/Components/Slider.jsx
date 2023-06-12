@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useManga } from "../Context/MangaContext";
 import { useTheme } from "../Context/ThemeContext";
-import supabase from "../supabase/client";
+import supabase from "../Supabase/client";
 function Slider() {
   const { selectManga } = useManga();
   const { theme } = useTheme();

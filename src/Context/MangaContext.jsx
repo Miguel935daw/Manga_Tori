@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import supabase from "../supabase/client";
+import supabase from "../Supabase/client";
 
 export const MangaContext = createContext();
 
