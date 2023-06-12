@@ -11,6 +11,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.13.1",
     "carousel": "^0.0.3",
+    "gh-pages": "^5.0.0",
     "jszip": "^3.10.1",
     "node": "^20.1.0",
     "pdf-lib": "^1.17.1",
