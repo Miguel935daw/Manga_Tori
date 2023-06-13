@@ -6,15 +6,13 @@ import ListCreator from "./ListCreator";
 import { useManga } from "../Context/MangaContext";
 import supabase from "../Supabase/client";
 function Lists() {
-  const { selectUserList } = useManga();
-  const { userMangaList, updateUserMangaList } = useAuth();
+  const { selectUserList,  } = useManga();
+  const { userMangaList, getUserMangaList, userSession} = useAuth();
   const navigate = useNavigate();
   const { theme } = useTheme();
 
   const deleteList = async (listToDelete) => {
     let listID = listToDelete.List_ID;
-    let newList = userMangaList.filter((list) => list != listToDelete);
-    updateUserMangaList(newList);
     const { error } = await supabase
       .from("Lista")
       .delete()
@@ -22,6 +20,8 @@ function Lists() {
     if (error) {
       console.log(error);
     }
+    //Actualizamos el estado de userMangaList con la función
+    getUserMangaList(userSession.id);
   };
   if (!userMangaList) {
     return (

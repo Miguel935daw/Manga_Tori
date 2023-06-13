@@ -76,9 +76,9 @@ function MangaList() {
   };
   if (!mangas) {
     return (
-      <p className={
-        theme === "light" ? "title Applight" : "title Appdark"
-      }>Cargando...</p>
+      <p className={theme === "light" ? "title Applight" : "title Appdark"}>
+        Cargando...
+      </p>
     );
   }
 
@@ -105,26 +105,34 @@ function MangaList() {
               <img src="/images/close.png" alt="cerrar" id="close" />
             </div>
             <img src="/images/logo.png" alt="logo" className="loginLogo" />
-            <label htmlFor="list" style={{ width: "100%" }}>
-              Selecciona la lista:{" "}
-            </label>
-            <select
-              name="list"
-              id="list"
-              className={
-                theme === "light"
-                  ? "listSelection Applight"
-                  : "listSelection Appdark"
-              }
-            >
-              {userMangaList.map((lista) => (
-                <option value={lista.List_ID}>{lista.Nombre}</option>
-              ))}
-            </select>
-            <button onClick={() => addToList()} className="addButton">
-              Añadir
-            </button>
-            <p id="message"></p>
+            {//Si el usuario no tiene ninguna lista aparece otro popUp
+            userMangaList.length != 0 ? (
+              <>
+                
+                <label htmlFor="list" style={{ width: "100%" }}>
+                  Selecciona la lista:{" "}
+                </label>
+                <select
+                  name="list"
+                  id="list"
+                  className={
+                    theme === "light"
+                      ? "listSelection Applight"
+                      : "listSelection Appdark"
+                  }
+                >
+                  {userMangaList.map((lista) => (
+                    <option value={lista.List_ID}>{lista.Nombre}</option>
+                  ))}
+                </select>
+                <button onClick={() => addToList()} className="addButton">
+                  Añadir
+                </button>
+                <p id="message"></p>
+              </>
+            ) : (
+              <p>Aún no tienes ninguna lista</p>
+            )}
           </div>
         </div>
       ) : (
