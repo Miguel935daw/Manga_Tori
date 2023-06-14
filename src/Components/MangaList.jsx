@@ -10,6 +10,7 @@ function MangaList() {
   const navigate = useNavigate();
   const { theme } = useTheme();
   const { userMangaList, updateUserMangaList } = useAuth();
+  //Hace que aparezca el popUp para añádir un manga una lista.
   const popUp = () => {
     document.getElementById("overlay").style.display = "block";
     document.getElementById("close").addEventListener("click", function () {
@@ -17,6 +18,7 @@ function MangaList() {
       document.getElementById("message").innerHTML = "";
     });
   };
+  //Función para comprobar si un manga ya existe en una lista
   const compareMangas = (lista) => {
     for (let i = 0; i < lista.length; i++) {
       const manga = lista[i];
@@ -26,6 +28,7 @@ function MangaList() {
     }
     return false;
   };
+  
   const addToList = async () => {
     let listID = document.getElementById("list").value;
     let list = {};

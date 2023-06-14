@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext } from "react";
+import {  useEffect } from "react";
 import { useManga } from "../Context/MangaContext";
-import { useNavigate } from "react-router-dom";
 import { useTheme } from "../Context/ThemeContext";
 import { useChapter } from "../Context/ChapterContext";
 import PageSlider from "./PageSlider";

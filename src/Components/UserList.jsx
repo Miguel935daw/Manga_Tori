@@ -11,7 +11,6 @@ function UserList() {
   const { theme } = useTheme();
   useEffect(() => {
     if (UserListSelected) {
-      console.log("Estoy cambiando");
       localStorage.setItem(
         "UserListSelected",
         JSON.stringify(UserListSelected)

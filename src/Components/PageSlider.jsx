@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useManga } from "../Context/MangaContext";
 import { useTheme } from "../Context/ThemeContext";
-import { useChapter } from "../Context/ChapterContext";
 function PageSlider() {
   const { mangaSelected, chapterSelected, selectChapter, setMangaSelected } =
     useManga();
@@ -91,7 +90,6 @@ function PageSlider() {
         className="paginadeSliderButton2"
         onClick={() => {
           selectedIndex != pages.length-1 ? next() : "" 
-          //grande()
         }}
         style={{ opacity: selectedIndex == pages.length-1 ? "0" : "1", width: "5%"}}
       />

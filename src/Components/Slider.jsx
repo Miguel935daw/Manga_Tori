@@ -5,7 +5,6 @@ import { useTheme } from "../Context/ThemeContext";
 import supabase from "../Supabase/client";
 function Slider() {
   const { selectManga } = useManga();
-  const { theme } = useTheme();
   const [mangasSlider, setMangasSlider] = useState()
   const navigate = useNavigate();
   const images = [
