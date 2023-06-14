@@ -1,5 +1,4 @@
-import { createContext, useState, useEffect, useContext } from "react";
-import supabase from "../Supabase/client";
+import { createContext, useState, useContext } from "react";
 export const ChapterContext = createContext();
 
 export function ChapterContextProvider({ children }){

@@ -58,13 +58,9 @@ function NavBar() {
               }}
             ></span>
           </li>
-          {userSession ? (
-            <li>
-              <a onClick={() => navigate("/Listas")}>Mis Listas</a>
-            </li>
-          ) : (
-            ""
-          )}
+          <li>
+            <a onClick={() => navigate("/Listas")}>Mis Listas</a>
+          </li>
           <li>
             <a onClick={() => navigate("/Library")}>Biblioteca</a>
           </li>
