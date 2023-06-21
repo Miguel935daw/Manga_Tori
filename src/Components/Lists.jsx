@@ -4,9 +4,10 @@ import { useAuth } from "../Context/UserContext";
 import ListCreator from "./ListCreator";
 import { useManga } from "../Context/MangaContext";
 import supabase from "../Supabase/client";
+import { useEffect } from "react";
 function Lists() {
-  const { selectUserList,  } = useManga();
-  const { userMangaList, getUserMangaList, userSession} = useAuth();
+  const { selectUserList } = useManga();
+  const { userMangaList, getUserMangaList, userSession } = useAuth();
   const navigate = useNavigate();
   const { theme } = useTheme();
 
@@ -22,6 +23,9 @@ function Lists() {
     //Actualizamos el estado de userMangaList con la función
     getUserMangaList(userSession.id);
   };
+  useEffect(() => {
+    getUserMangaList(userSession.id);
+  }, []);
   if (!userMangaList) {
     return (
       <>

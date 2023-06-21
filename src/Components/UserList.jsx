@@ -31,9 +31,9 @@ function UserList() {
       Nombre: UserListSelected.Nombre,
     };
     newList.Mangas = UserListSelected.Mangas.filter(
-      (manga) => manga != mangaToDelete
+      (manga) => manga.Manga_ID != mangaToDelete.Manga_ID
     );
-    selectUserList(newList);
+    selectUserList(newList)
     const { error } = await supabase
       .from("Lista")
       .update({ Mangas: newList.Mangas })

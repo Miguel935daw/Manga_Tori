@@ -9,7 +9,7 @@ function MangaList() {
   const { mangas, selectManga, mangaSelected } = useManga();
   const navigate = useNavigate();
   const { theme } = useTheme();
-  const { userMangaList, updateUserMangaList } = useAuth();
+  const { userMangaList, updateUserMangaList, userSession } = useAuth();
   //Hace que aparezca el popUp para añádir un manga una lista.
   const popUp = () => {
     document.getElementById("overlay").style.display = "block";
@@ -172,7 +172,7 @@ function MangaList() {
                     {manga.Nombre}
                   </h2>
                   {/* Si el usuario está registrado se muestra el botón para añádir a la lista */}
-                  {userMangaList ? (
+                  {userSession ? (
                     <button
                       className={
                         theme === "light"
